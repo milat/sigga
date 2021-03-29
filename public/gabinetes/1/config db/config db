@@ -1,0 +1,3 @@
+mysql -u root -p
+GRANT ALL ON sigga.* TO 'sigga_admin'@'%' IDENTIFIED BY '$1gG4sis';
+FLUSH PRIVILEGES;

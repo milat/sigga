@@ -1,0 +1,52 @@
+.required::after {
+    content: " *";
+    color: red;
+}
+
+.required-legend::after {
+    content: "* Campos obrigatórios";
+    color: red;
+    text-align: right !important;
+}
+
+.inactive {
+    color: red;
+}
+
+.loading-gif {
+    width: 50px;
+    margin-top: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+fieldset {
+	background-color: #f2f2f2;
+	border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+legend {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 17px;
+	padding: 3px 5px 3px 7px;
+	width: auto;
+}
+
+.select2-results__option [role="option"]{
+    padding-left: 30px !important;
+}
+
+li .select2-results__group {
+    font-size: 16px !important;
+    background-color: #f2f2f2 !important;
+}
+
+.clickable_row {
+    cursor: pointer;
+}
