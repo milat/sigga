@@ -19,10 +19,10 @@
                     @forelse($citizens as $citizen)
 
                         <tr>
-                            <th scope="row">{{$citizen->name}}</th>
-                            <td>{{$citizen->email}}</td>
-                            <td class="text-center">{{$citizen->identity_document}}</td>
-                            <td class="text-center">
+                            <th scope="row" style="white-space: nowrap;">{{$citizen->name}}</th>
+                            <td style="white-space: nowrap;">{{$citizen->email}}</td>
+                            <td class="text-center" style="white-space: nowrap;">{{$citizen->identity_document}}</td>
+                            <td class="text-center" style="white-space: nowrap;">
                                 @if (isset($citizen->phone))
                                     {{$citizen->phone->number}}
                                     <small>({{$citizen->phone->type->name}})</small>
@@ -30,7 +30,7 @@
                                     -
                                 @endif
                             </td>
-                            <td class="text-center">{!! $citizen->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
+                            <td class="text-center" style="white-space: nowrap;">{!! $citizen->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
                             @can('citizen.update')
                                 <td class="text-center">
                                     <a href="{{route('citizen.edit', $citizen->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('citizen'))}} {{$citizen->name}}"><x-bi-pencil-square/></a>

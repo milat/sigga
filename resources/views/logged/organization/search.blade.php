@@ -20,11 +20,11 @@
                     @forelse($organizations as $organization)
 
                         <tr>
-                            <th scope="row">{{$organization->trade}}</th>
-                            <td class="text-center">{{$organization->branch ?? '-' }}</td>
-                            <td class="text-center">{{$organization->identity_document ?? '-' }}</td>
-                            <th scope="row">{{$organization->contact}}</th>
-                            <td class="text-center">
+                            <th scope="row" style="white-space: nowrap;">{{$organization->trade}}</th>
+                            <td class="text-center" style="white-space: nowrap;">{{$organization->branch ?? '-' }}</td>
+                            <td class="text-center" style="white-space: nowrap;">{{$organization->identity_document ?? '-' }}</td>
+                            <th scope="row" style="white-space: nowrap;">{{$organization->contact}}</th>
+                            <td class="text-center" style="white-space: nowrap;">
                                 @if (isset($organization->phone))
                                     {{$organization->phone->number}}
                                     <small>({{$organization->phone->type->name}})</small>
@@ -32,7 +32,7 @@
                                     -
                                 @endif
                             </td>
-                            <td class="text-center">{!! $organization->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
+                            <td class="text-center" style="white-space: nowrap;">{!! $organization->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
                             @can('organization.update')
                                 <td class="text-center">
                                     <a href="{{route('organization.edit', $organization->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('organization'))}} {{$organization->trade}}"><x-bi-pencil-square/></a>

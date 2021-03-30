@@ -15,8 +15,8 @@
                     @forelse($roles as $role)
 
                         <tr>
-                            <th scope="row">{{$role->name}}</th>
-                            <td class="text-center">{!! $role->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
+                            <th scope="row" style="white-space: nowrap;">{{$role->name}}</th>
+                            <td class="text-center" style="white-space: nowrap;">{!! $role->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
                             <td class="text-center">
                                 <a href="{{route('role.edit', $role->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('role'))}} '{{$role->name}}'"><x-bi-pencil-square/></a>
                             </td>

@@ -20,11 +20,11 @@
                     @forelse($documents as $document)
 
                         <tr>
-                            <td scope="row">{{$document->type->name}}</td>
-                            <td>{{$document->code}}</td>
-                            <td>{{$document->title}}</td>
-                            <td>{{$document->file_name}}</td>
-                            <td class="text-center"> {{ date('d/m/Y', strtotime($document->date)) }}</td>
+                            <td scope="row" style="white-space: nowrap;">{{$document->type->name}}</td>
+                            <td style="white-space: nowrap;">{{$document->code}}</td>
+                            <td style="white-space: nowrap;">{{$document->title}}</td>
+                            <td style="white-space: nowrap;">{{$document->file_name}}</td>
+                            <td class="text-center" style="white-space: nowrap;"> {{ date('d/m/Y', strtotime($document->date)) }}</td>
                             @can('document.update')
                                 <td class="text-center">
                                     <a href="{{route('document.edit', $document->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('document'))}} '{{$document->code}}'"><x-bi-pencil-square/></a>

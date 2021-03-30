@@ -15,9 +15,9 @@
                     @forelse($categories as $category)
 
                         <tr>
-                            <th scope="row">{{$category->name}}</th>
+                            <th scope="row" style="white-space: nowrap;">{{$category->name}}</th>
                             <!-- <th class="text-center" style="background-color: {{$category->colour}}"></th> -->
-                            <td class="text-center">{!! $category->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
+                            <td class="text-center" style="white-space: nowrap;">{!! $category->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
                             <td class="text-center">
                                 <a href="{{route('category.edit', $category->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('category'))}} '{{$category->name}}'"><x-bi-pencil-square/></a>
                             </td>

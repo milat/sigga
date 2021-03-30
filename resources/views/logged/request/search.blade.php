@@ -17,20 +17,20 @@
                     @forelse($requests as $request)
 
                         <tr class="clickable_row" data-url="{{route('request.view', $request->id)}}">
-                            <td scope="row">
+                            <td scope="row" style="white-space: nowrap;">
                                 {{$request->requester()}} <small>({{$language::get($request->requesterType())}})</small>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" style="white-space: nowrap;">
                                 {{$request->category->name}}
                             </td>
-                            <td>{{$request->title}}</td>
-                            <td scope="row">{{$request->place ?? '' }}</td>
-                            <td class="text-center">
+                            <td style="white-space: nowrap;">{{$request->title}}</td>
+                            <td scope="row" style="white-space: nowrap;">{{$request->place ?? '' }}</td>
+                            <td class="text-center" style="white-space: nowrap;">
                                 <span class="badge rounded-pill {{$request->status->class}}">
                                     {{$request->status->name}}
                                 </span>
                             </td>
-                            <td class="text-center">{{ date('d/m/Y H:i:s', strtotime($request->created_at)) }}</td>
+                            <td class="text-center" style="white-space: nowrap;">{{ date('d/m/Y H:i:s', strtotime($request->created_at)) }}</td>
                         </tr>
 
                     @empty

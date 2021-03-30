@@ -18,10 +18,10 @@
                     @forelse($users as $user)
 
                         <tr>
-                            <th scope="row">{{$user->name}}</th>
-                            <td>{{$user->email}}</td>
-                            <td class="text-center">{{$user->role->name}}</td>
-                            <td class="text-center">{!! $user->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
+                            <th scope="row" style="white-space: nowrap;">{{$user->name}}</th>
+                            <td style="white-space: nowrap;">{{$user->email}}</td>
+                            <td class="text-center" style="white-space: nowrap;">{{$user->role->name}}</td>
+                            <td class="text-center" style="white-space: nowrap;">{!! $user->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
                             @can('user.update')
                                 <td class="text-center">
                                     <a href="{{route('user.edit', $user->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('user'))}} {{$user->name}}"><x-bi-pencil-square/></a>
