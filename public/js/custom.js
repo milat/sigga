@@ -32,15 +32,15 @@ $(document).ready(function() {
 
     $('.telefone').mask(maskBehavior, options);
 
-    $('#cep').blur(function(){
+    $('#address_postal_code').blur(function(){
 
         var url = "https://viacep.com.br/ws/"+$(this).val()+"/json/";
 
         $.get(url, function (data) {
-            $("#logradouro").val(data.logradouro);
-            $("#bairro").val(data.bairro);
-            $("#cidade").val(data.localidade);
-            $('#uf').val(data.uf);
+            $("#address_address").val(data.logradouro);
+            $("#address_neighborhood").val(data.bairro);
+            $("#address_city").val(data.localidade);
+            $('#address_state').val(data.uf);
         });
     });
 
