@@ -19,7 +19,7 @@
                 <fieldset>
 
                     <div class="row">
-                        <div class="col-12 col-md-8">
+                        <div class="col-12 col-md-8 col-lg-9">
                             <div class="form-group">
                                 <label for="category_name" class="required">{{$language::get('category_name')}}</label>
                                 <input type="text" class="form-control @error('category_name') is-invalid @enderror" id="category_name" name="category_name" placeholder="{{$language::get('category_name_placeholder')}}" maxlength="20" value="{{$category ? $category->name : old('category_name')}}">
@@ -36,7 +36,7 @@
                                 <input type="color" class="form-control" id="cor" name="cor" value="{{$category ? $category->colour : '#f8f9fa'}}">
                             </div>
                         </div> -->
-                        <div class="col-12 col-md-3">
+                        <div class="col-12 col-md-4 col-lg-3">
                             <div class="form-group">
                                 <label for="category_is_active" class="required">{{$language::get('category_is_active')}}</label>
                                 <select id="category_is_active" class="form-control combo @error('category_is_active') is-invalid @enderror" name="category_is_active">
@@ -59,8 +59,9 @@
                     </div>
                 </div>
 
-                <div class="form-group row mt-5 justify-content-md-center">
-                    <div class="col-md-2">
+                <div class="form-group row mt-3 justify-content-md-center">
+                    <!-- Only for medium or larger screens -->
+                    <div class="col-md-2 d-none d-md-block">
                         <a href="{{route('category.index')}}">
                             <button type="button" class="btn btn-outline-secondary btn-block">
                                 {{$language::get('return')}}
@@ -71,6 +72,17 @@
                         <button type="submit" class="btn btn-primary btn-block">
                             {{ $category ? $language::get('update') : $language::get('insert') }}
                         </button>
+                    </div>
+                </div>
+
+                <!-- Only for small screens -->
+                <div class="form-group row mt-4 justify-content-md-center">
+                    <div class="col-md-2 d-block d-md-none">
+                        <a href="{{route('category.index')}}">
+                            <button type="button" class="btn btn-outline-secondary btn-block">
+                                {{$language::get('return')}}
+                            </button>
+                        </a>
                     </div>
                 </div>
 

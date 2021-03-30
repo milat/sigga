@@ -5,7 +5,7 @@
                 <form method="POST" action="{{ route('request.progress', $request->id) }}">
                     <div class="row">
                         @csrf
-                        <div class="col-10">
+                        <div class="col-12 col-md-10">
                             <div class="form-group">
                                 <textarea class="form-control" id="progress_description" name="progress_description" rows="1" placeholder="{{$language::get('progress_description_placeholder')}}"></textarea>
                             </div>

@@ -110,8 +110,9 @@
                     </div>
                 </div>
 
-                <div class="form-group row mt-5 justify-content-md-center">
-                    <div class="col-md-2">
+                <div class="form-group row mt-3 justify-content-md-center">
+                    <!-- Only for medium or larger screens -->
+                    <div class="col-md-2 d-none d-md-block">
                         <a href="{{route('citizen.index')}}">
                             <button type="button" class="btn btn-outline-secondary btn-block">
                                 {{$language::get('return')}}
@@ -122,6 +123,17 @@
                         <button type="submit" class="btn btn-primary btn-block">
                             {{ $citizen ? $language::get('update') : $language::get('insert') }}
                         </button>
+                    </div>
+                </div>
+
+                <!-- Only for small screens -->
+                <div class="form-group row mt-4 justify-content-md-center">
+                    <div class="col-md-2 d-block d-md-none">
+                        <a href="{{route('citizen.index')}}">
+                            <button type="button" class="btn btn-outline-secondary btn-block">
+                                {{$language::get('return')}}
+                            </button>
+                        </a>
                     </div>
                 </div>
 

@@ -20,7 +20,7 @@
 
                     <div class="row">
 
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <div class="form-group">
                                 <label for="document_type_id" class='required'>{{$language::get('document_type_id')}}</label>
                                 <select id="document_type_id" class="form-control combo @error('document_type_id') is-invalid @enderror" name="document_type_id">
@@ -36,7 +36,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <div class="form-group">
                                 <label for="document_code" class="required">{{$language::get('document_code')}}</label>
                                 <input type="text" class="form-control @error('document_code') is-invalid @enderror" id="document_code" name="document_code" maxlength="20" placeholder="{{$language::get('document_code_placeholder')}}" value="{{$document ? $document->code : old('document_code')}}">
@@ -48,7 +48,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-6 col-lg-5 col-xl-6">
                             <div class="form-group">
                                 <label for="document_title" class="required">{{$language::get('document_title')}}</label>
                                 <input type="text" class="form-control @error('document_title') is-invalid @enderror" id="document_title" name="document_title" maxlength="100" placeholder="{{$language::get('document_title_placeholder')}}" value="{{$document ? $document->title : old('document_title')}}">
@@ -60,7 +60,7 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-md-2">
+                        <div class="col-12 col-md-6 col-lg-3 col-xl-2">
                             <div class="form-group">
                                 <label for="document_date" class="required">{{$language::get('document_date')}}</label>
                                 <input type="date" class="form-control @error('document_date') is-invalid @enderror" id="document_date" name="document_date" placeholder="{{$language::get('document_date_placeholder')}}" value="{{$document ? $document->date : old('document_date') ?? date('Y-m-d')}}">
@@ -106,8 +106,9 @@
                     </div>
                 </div>
 
-                <div class="form-group row mt-5 justify-content-md-center">
-                    <div class="col-md-2">
+                <div class="form-group row mt-3 justify-content-md-center">
+                    <!-- Only for medium or larger screens -->
+                    <div class="col-md-2 d-none d-md-block">
                         <a href="{{route('document.index')}}">
                             <button type="button" class="btn btn-outline-secondary btn-block">
                                 {{$language::get('return')}}
@@ -118,6 +119,17 @@
                         <button type="submit" class="btn btn-primary btn-block">
                             {{ $document ? $language::get('update') : $language::get('insert') }}
                         </button>
+                    </div>
+                </div>
+
+                <!-- Only for small screens -->
+                <div class="form-group row mt-4 justify-content-md-center">
+                    <div class="col-md-2 d-block d-md-none">
+                        <a href="{{route('document.index')}}">
+                            <button type="button" class="btn btn-outline-secondary btn-block">
+                                {{$language::get('return')}}
+                            </button>
+                        </a>
                     </div>
                 </div>
 

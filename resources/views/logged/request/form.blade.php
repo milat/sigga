@@ -12,25 +12,25 @@
 
                 @if ($request)
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-12 col-md-6 col-lg-4">
                             <div class="form-group">
                                 <label for="requester" class='required'>{{$language::get('request_requester')}}</label>
                                 <input type="text" disabled="true" class="form-control" id="solicitante" value="{{$requester}}">
                             </div>
                         </div>
-                        <div class="col-2">
+                        <div class="col-12 col-md-6 col-lg-2">
                             <div class="form-group">
                                 <label for="requester_type" class='required'>{{$language::get('request_requester_type')}}</label>
-                                <input type="text" disabled="true" class="form-control" id="requester_type" value="{{$requesterType}}">
+                                <input type="text" disabled="true" class="form-control" id="requester_type" value="{{$language::get($requesterType)}}">
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-12 col-md-6 col-lg-3">
                             <div class="form-group">
                                 <label for="request_responsible" class='required'>{{$language::get('request_responsible')}}</label>
                                 <input type="text" disabled="true" class="form-control" id="request_responsible" value="{{$request->responsible->email}}">
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-12 col-md-6 col-lg-3">
                             <div class="form-group">
                                 <label for="request_created_at" class='required'>{{$language::get('request_created_at')}}</label>
                                 <input type="text" disabled="true" class="form-control" id="request_created_at" value="{{ date('d/m/Y - H:i:s', strtotime($request->created_at)) }}">
@@ -70,7 +70,7 @@
 
                 <div class="row">
 
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-md-6 col-lg-3">
                         <div class="form-group">
                             <label for="request_category_id" class='required'>{{$language::get('request_category_id')}}</label>
                             <select id="request_category_id" class="form-control combo @error('request_category_id') is-invalid @enderror" name="request_category_id" {{($request && Auth::user()->cant('request.update')) ? 'disabled' : '' }}>
@@ -87,7 +87,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-3">
+                    <div class="col-12 col-md-6 col-lg-3">
                         <div class="form-group">
                             <label for="request_status_id" class='required'>{{$language::get('request_status_id')}}</label>
                             <select id="request_status_id" class="form-control combo @error('request_status_id') is-invalid @enderror" name="request_status_id" {{($request && Auth::user()->cant('request.update')) ? 'disabled' : '' }}>
@@ -103,7 +103,7 @@
                         </div>
                     </div>
 
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-12 col-lg-6">
                         <div class="form-group">
                             <label for="request_place">{{$language::get('request_place')}}</label>
                             <input type="text" class="form-control @error('request_place') is-invalid @enderror" id="request_place" name="request_place" maxlength="150" placeholder="{{$language::get('request_place_placeholder')}}" value="{{$request ? $request->place : old('request_place')}}" {{($request && Auth::user()->cant('request.update')) ? 'disabled' : '' }}>
@@ -152,8 +152,9 @@
 
             @endif
 
-            <div class="form-group row mt-5 justify-content-md-center">
-                <div class="col-md-2">
+            <div class="form-group row mt-3 justify-content-md-center">
+                <!-- Only for medium or larger screens -->
+                <div class="col-md-2 d-none d-md-block">
                     <a href="{{route('request.index')}}">
                         <button type="button" class="btn btn-outline-secondary btn-block">
                             {{$language::get('return')}}
@@ -168,6 +169,17 @@
                         </button>
                     </div>
                 @endif
+            </div>
+
+            <!-- Only for small screens -->
+            <div class="form-group row mt-4 justify-content-md-center">
+                <div class="col-md-2 d-block d-md-none">
+                    <a href="{{route('request.index')}}">
+                        <button type="button" class="btn btn-outline-secondary btn-block">
+                            {{$language::get('return')}}
+                        </button>
+                    </a>
+                </div>
             </div>
 
         </form>

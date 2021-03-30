@@ -69,7 +69,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group row mt-5 justify-content-md-center">
+                    <div class="form-group row mt-3 justify-content-md-center">
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-primary btn-block">
                                 {{$language::get('update')}}

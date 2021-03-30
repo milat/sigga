@@ -177,6 +177,6 @@ return [
         'role_permission_label' => 'Ao alterar as permissões o acesso é atualizado automaticamente',
         'role_permission_update_error' => 'Erro ao atualizar permissão',
 
-        'about_system' => '<b>Sigga</b> é um sistema para gestão de gabinete. Seu propósito é gerenciar os cadastros, demandas e documentação para que o agente político e seus assessores tenham total controle e visão das atividadaes em andamento e as já concluídas, mantendo o histórico e dados para análise.',
+        'about_system' => 'Sigga é um sistema para gestão de gabinete. Seu propósito é gerenciar os cadastros, demandas e documentação para que o agente político e seus assessores tenham total controle e visão das atividadaes em andamento e as já concluídas, mantendo o histórico e dados para análise.',
     ]
 ];

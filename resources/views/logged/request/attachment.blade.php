@@ -5,12 +5,12 @@
                 <form method="POST" enctype="multipart/form-data" action="{{ route('request.attachment', $request->id) }}">
                     <div class="row">
                         @csrf
-                        <div class="col-7">
+                        <div class="col-12 col-md-5 col-lg-7">
                             <div class="form-group">
                                 <input type='text' class="form-control" id="attachment_title" name="attachment_title" placeholder="{{$language::get('attachment_title_placeholder')}}" />
                             </div>
                         </div>
-                        <div class="col-3">
+                        <div class="col-12 col-md-5 col-lg-3">
                             <div class="form-group">
                                 <input type="file" class="form-control-file" id="attachment_file" name="attachment_file">
                             </div>

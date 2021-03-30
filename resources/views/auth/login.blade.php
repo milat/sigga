@@ -4,23 +4,24 @@
 <div class="container">
 
     <div class="row mt-5">
-        <div class="col-6">
+        <div class="col-12 col-lg-6">
             <div class="row">
                 <div class="col-12">
                     <center>
-                        <img src="{{ asset('images/logo_wt.png') }}" width="300px" />
+                        <img src="{{ asset('images/logo_wt_sm.png') }}" width="300px" />
                     </center>
                 </div>
-                <div class="col-12">
+                <div class="col-12 d-none d-lg-block">
                     <hr />
-                    <span style="font-size:18px; text-align: Justify;">
+                    <span style="font-size:18px; text-align: justify; display: flex;">
                         {!! $language::get('about_system') !!}
                     </span>
                 </div>
             </div>
         </div>
-        <div class="col-6">
-            <div class="card mt-4">
+        <div class="col-12 col-lg-6 mt-4">
+            <div class="mt-4 d-block d-lg-none"></div>
+            <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
