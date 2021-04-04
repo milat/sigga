@@ -94,7 +94,7 @@ class CitizenController extends Controller
 
         $validated = $httpRequest->validate([
             'citizen_name' => ['required', 'max:100'],
-            'citizen_email' => ['email', 'max:100'],
+            'citizen_email' => ['nullable', 'email', 'max:100'],
             'citizen_identity_document' => ['required', Rule::unique('citizens', 'identity_document'), 'cpf', 'formato_cpf', 'max:20'],
             'phone_phone_type_id' => 'required',
             'phone_number' => ['required', 'min:14', 'max:15'],
@@ -174,7 +174,7 @@ class CitizenController extends Controller
 
         $validated = $httpRequest->validate([
             'citizen_name' => ['required', 'max:100'],
-            'citizen_email' => ['email', 'max:100'],
+            'citizen_email' => ['nullable', 'email', 'max:100'],
             'citizen_identity_document' => ['required', Rule::unique('citizens', 'identity_document')->ignore($citizen->id), 'cpf', 'formato_cpf', 'max:20'],
             'phone_phone_type_id' => 'required',
             'phone_number' => ['required', 'min:14', 'max:15'],
