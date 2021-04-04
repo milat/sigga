@@ -11,7 +11,8 @@ abstract class Friendly
         }
         $text = Language::get($label, $language);
 
-        $text = Text::removeAccent($text);
+        Text::removeAccent($text);
+        Text::replaceSpaces($text);
 
         return strtolower($text);
     }

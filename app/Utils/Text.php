@@ -4,9 +4,14 @@ namespace App\Utils;
 
 abstract class Text
 {
-    public static function removeAccent(string $text)
+    public static function removeAccent(string &$text)
     {
-        return str_replace(self::getAccents(), self::getAccentless(), $text);
+        $text = str_replace(self::getAccents(), self::getAccentless(), $text);
+    }
+
+    public static function replaceSpaces(string &$text, string $replaceWith = '_')
+    {
+        $text = str_replace(' ', $replaceWith, $text);
     }
 
     private static function getAccents()
