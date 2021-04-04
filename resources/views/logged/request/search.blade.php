@@ -68,7 +68,7 @@
                     @empty
 
                         <tr>
-                            <td colspan="7" align="center">
+                            <td colspan="9" align="center">
                                 {{$language::get('no_records_found')}}
                             </td>
                         </tr>
