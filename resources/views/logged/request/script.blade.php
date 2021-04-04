@@ -9,9 +9,9 @@
     /**
      *  Searches on type
      */
-    $('#request_search').keyup(function(){
+    $('#request_search').keyup(delay(function(){
         requestSearch();
-    });
+    }, 600));
 
     /**
      *  Searches when status is changed

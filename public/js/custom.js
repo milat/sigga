@@ -21,6 +21,17 @@ $('select.select2').on('select2:closing', function (e) {
     });
 });
 
+function delay(callback, ms) {
+    var timer = 0;
+    return function() {
+        var context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            callback.apply(context, args);
+        }, ms || 0);
+    };
+}
+
 $(document).ready(function() {
 
     $('.combo').select2({
@@ -97,9 +108,9 @@ $(document).ready(function() {
     /**
      *  Trigger search function
      */
-    $('#search').keyup(function(){
+    $('#search').keyup(delay(function(){
         search();
-    });
+    }, 600));
 
     /**
      *  Paginates results
