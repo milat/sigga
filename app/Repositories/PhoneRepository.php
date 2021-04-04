@@ -36,6 +36,9 @@ class PhoneRepository
     private static function persist(HttpRequest $httpRequest, int $ownerTypeId, int $ownerId, bool $isMain)
     {
         if (!self::isFilled($httpRequest, $isMain)) {
+            if (!$isMain) {
+                self::deleteSecondary($ownerTypeId, $ownerId);
+            }
             return false;
         }
 
@@ -50,6 +53,22 @@ class PhoneRepository
         $phone->is_main = $isMain;
 
         return $phone->save();
+    }
+
+    /**
+     *  Deletes owners secondary phone
+     *
+     *  @param int $ownerTypeId
+     *  @param int $ownerId
+     *
+     *  @return void
+     */
+    private static function deleteSecondary(int $ownerTypeId, int $ownerId)
+    {
+        Phone::where('owner_type_id', $ownerTypeId)
+            ->where('owner_id', $ownerId)
+            ->where('is_main', false)
+            ->delete();
     }
 
     /**

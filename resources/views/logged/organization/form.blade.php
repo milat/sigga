@@ -11,7 +11,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <form method="POST" action="{{ $organization ? route('organization.update', $organization->id) : route('organization.insert') }}">
+            <form method="POST" autocomplete="off" action="{{ $organization ? route('organization.update', $organization->id) : route('organization.insert') }}">
 
                 @csrf
 
@@ -64,7 +64,13 @@
                         <div class="col-12 col-md-4">
                             <div class="form-group">
                                 <label for="organization_branch">{{$language::get('organization_branch')}}</label>
-                                <input type="text" class="form-control @error('organization_branch') is-invalid @enderror" id="organization_branch" name="organization_branch" maxlength="100" placeholder="{{$language::get('organization_branch_placeholder')}}" value="{{$organization ? $organization->branch : old('organization_branch')}}">
+                                <select id="organization_branch" class="form-control combo_tag @error('organization_branch') is-invalid @enderror" name="organization_branch">
+                                    <option></option>
+                                    @foreach ($branches as $branch)
+                                        <option value="{{$branch->branch}}" {{(($organization && $organization->branch == $branch->branch) || (old('organization_branch') == $branch->branch)) ? 'selected' : ''}}>{{$branch->branch}}</option>
+                                    @endforeach
+                                </select>
+
                                 @error('organization_branch')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -10,4 +10,11 @@ abstract class Language
 
         return config("language.{$language}.{$label}");
     }
+
+    public static function all(string $language = null)
+    {
+        $language = $language ?: config('language.default');
+        return config("language.{$language}");
+
+    }
 }

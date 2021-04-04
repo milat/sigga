@@ -1,10 +1,15 @@
-<div class="mb-2">
-    <center>
-        <b>{{$language::get('dashboard_request_category_month')}}</b>
-    </center>
-</div>
+<fieldset>
+    <div class="mb-2 pt-2">
+        <center>
+            <h4>
+                <b>{{$language::get('dashboard_request_category_month')}}</b>
+            </h4>
+        </center>
+    </div>
 
-<canvas id="categories_month"></canvas>
+    <canvas id="categories_month"></canvas>
+    
+</fieldset>
 
 <script>
     var ctx = document.getElementById('categories_month');
@@ -14,8 +19,8 @@
         data: {
             labels: [
                 <?php
-                    foreach ($data['categories']['month'] as $categoria) {
-                        echo "'".$categoria['label']."',";
+                    foreach ($data['categories']['month'] as $category) {
+                        echo "'".$category['label']."',";
                     }
                 ?>
             ],
@@ -23,8 +28,15 @@
                 label: "{{$language::get('dashboard_info_label')}}",
                 data: [
                     <?php
-                        foreach ($data['categories']['month'] as $categoria) {
-                            echo $categoria['total'].",";
+                        foreach ($data['categories']['month'] as $category) {
+                            echo $category['total'].",";
+                        }
+                    ?>
+                ],
+                backgroundColor: [
+                    <?php
+                        foreach ($data['categories']['month'] as $category) {
+                            echo "'".$category['colour']."80',";
                         }
                     ?>
                 ],
@@ -32,6 +44,9 @@
             }]
         },
         options: {
+            legend: {
+                display: false
+            },
             scales: {
                 yAxes: [{
                     ticks: {

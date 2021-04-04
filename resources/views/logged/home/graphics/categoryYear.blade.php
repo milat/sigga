@@ -1,10 +1,15 @@
-<div class="mb-2">
-    <center>
-        <b>{{$language::get('dashboard_request_category_year')}}</b>
-    </center>
-</div>
+<fieldset>
+    <div class="mb-2 pt-2">
+        <center>
+            <h4>
+                <b>{{$language::get('dashboard_request_category_year')}}</b>
+            </h4>
+        </center>
+    </div>
 
-<canvas id="categories_year"></canvas>
+    <canvas id="categories_year"></canvas>
+
+</fieldset>
 
 <script>
     var ctx = document.getElementById('categories_year');
@@ -14,8 +19,8 @@
         data: {
             labels: [
                 <?php
-                    foreach ($data['categories']['year'] as $categoria) {
-                        echo "'".$categoria['label']."',";
+                    foreach ($data['categories']['year'] as $category) {
+                        echo "'".$category['label']."',";
                     }
                 ?>
             ],
@@ -23,10 +28,17 @@
                 label: "{{$language::get('dashboard_info_label')}}",
                 data: [
                     <?php
-                    foreach ($data['categories']['year'] as $categoria) {
-                        echo $categoria['total'].",";
-                    }
-                ?>
+                        foreach ($data['categories']['year'] as $category) {
+                            echo $category['total'].",";
+                        }
+                    ?>
+                ],
+                backgroundColor: [
+                    <?php
+                        foreach ($data['categories']['month'] as $category) {
+                            echo "'".$category['colour']."80',";
+                        }
+                    ?>
                 ],
                 borderWidth: 1
             }]

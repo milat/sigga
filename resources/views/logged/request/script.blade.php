@@ -21,12 +21,11 @@
     });
 
     /**
-     *  Paginação busca
+     *  Searches when category is changed
      */
-    // $('body').on('click', '.pagination a', function(e) {
-    //     e.preventDefault();
-    //     load($(this).attr('href'));
-    // });
+    $('#category_id').change(function(){
+        requestSearch();
+    });
 
     /**
      *  Searches
@@ -35,9 +34,14 @@
     {
         var url = "{{route('request.search')}}/";
         var query = $('#request_search').val();
+        var category = $('#category_id').val();
         var status = $('#status_id').val();
 
         var params = "?query="+query;
+
+        if (category > 0) {
+            params += "&category="+category;
+        }
 
         if (status > 0) {
             params += "&status="+status;

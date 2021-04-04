@@ -84,10 +84,12 @@ class RequestCategoryRepository extends Repository
         foreach (self::getActives() as $category) {
             $data['categories']['month'][] = [
                 'label' => $category->name,
+                'colour' => $category->colour,
                 'total' => $category->monthRequests->count()
             ];
             $data['categories']['year'][] = [
                 'label' => $category->name,
+                'colour' => $category->colour,
                 'total' => $category->yearRequests->count()
             ];
         }

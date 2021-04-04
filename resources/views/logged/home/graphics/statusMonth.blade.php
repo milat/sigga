@@ -1,16 +1,21 @@
-<div class="mb-2">
-    <center>
-        <b>{{$language::get('dashboard_request_status_month')}}</b>
-    </center>
-</div>
+<fieldset>
+    <div class="mb-2 pt-2">
+        <center>
+            <h4>
+                <b>{{$language::get('dashboard_request_status_month')}}</b>
+            </h4>
+        </center>
+    </div>
 
-<canvas id="status_month"></canvas>
+    <canvas id="status_month"></canvas>
+
+</fieldset>
 
 <script>
     var ctx = document.getElementById('status_month');
 
     var status_mes = new Chart(ctx, {
-        type: 'polarArea',
+        type: 'bar',
         data: {
             labels: [
                 <?php
@@ -45,5 +50,18 @@
                 borderWidth: 1
             }]
         },
+        options: {
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        callback: function(value) {if (value % 1 === 0) {return value;}}
+                    }
+                }],
+            }
+        }
     });
 </script>

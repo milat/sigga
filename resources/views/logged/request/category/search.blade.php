@@ -6,7 +6,7 @@
                 <thead>
                     <tr class="table-info">
                         <th scope="col">{{$language::get('category_name')}}</th>
-                        <!-- <th scope="col" class="text-center">{{$language::get('category_colour')}}</th> -->
+                        <th scope="col" class="text-center">{{$language::get('category_colour')}}</th>
                         <th scope="col" class="text-center">{{$language::get('category_is_active')}}</th>
                         <th scope="col" class="text-center">{{$language::get('edit')}}</th>
                     </tr>
@@ -16,7 +16,11 @@
 
                         <tr>
                             <th scope="row" style="white-space: nowrap;">{{$category->name}}</th>
-                            <!-- <th class="text-center" style="background-color: {{$category->colour}}"></th> -->
+                            <th class="text-center">
+                                <span class="badge rounded-pill" style="background-color: {!!$category->colour!!};">
+                                    {{$category->colour}}
+                                </span>
+                            </th>
                             <td class="text-center" style="white-space: nowrap;">{!! $category->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
                             <td class="text-center">
                                 <a href="{{route('category.edit', $category->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('category'))}} '{{$category->name}}'"><x-bi-pencil-square/></a>

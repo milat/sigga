@@ -2,26 +2,13 @@
     <div class="col-md-12">
         <fieldset>
             @can ('request.update')
-                <form method="POST" enctype="multipart/form-data" action="{{ route('request.attachment', $request->id) }}">
-                    <div class="row">
-                        @csrf
-                        <div class="col-12 col-md-5 col-lg-7">
-                            <div class="form-group">
-                                <input type='text' class="form-control" id="attachment_title" name="attachment_title" placeholder="{{$language::get('attachment_title_placeholder')}}" />
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-5 col-lg-3">
-                            <div class="form-group">
-                                <input type="file" class="form-control-file" id="attachment_file" name="attachment_file">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                {{$language::get('insert')}}
-                            </button>
-                        </div>
+                <div class="row">
+                    <div class="col-12 col-md-2 offset-md-10 mb-2">
+                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#attachmentModal">
+                            {{$language::get('create')}}
+                        </button>
                     </div>
-                </form>
+                </div>
             @endcan
 
             <div class="row justify-content-center">
@@ -67,3 +54,41 @@
         </fieldset>
     </div>
 </div>
+
+
+@can ('request.update')
+    <div class="modal fade" id="attachmentModal" tabindex="-1" role="dialog" aria-labelledby="attachmentModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form method="POST" enctype="multipart/form-data" action="{{ route('request.attachment', $request->id) }}">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">{{$language::get('create')}} {{$language::get('attachment')}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input type='text' class="form-control" id="attachment_title" name="attachment_title" placeholder="{{$language::get('attachment_title_placeholder')}}" />
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <input type="file" class="form-control-file" id="attachment_file" name="attachment_file">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">
+                            {{$language::get('insert')}}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endcan

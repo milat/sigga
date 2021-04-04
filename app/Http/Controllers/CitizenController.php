@@ -195,4 +195,35 @@ class CitizenController extends Controller
 
         return $this->couldntUpdate();
     }
+
+    /**
+     *  Loads view page
+     *
+     *  @param HttpRequest $httpRequest
+     *  @param int $id
+     *
+     *  @return mixed
+     */
+    public function view(HttpRequest $httpRequest, int $id)
+    {
+        $citizen = CitizenRepository::find($id);
+
+        if (!$citizen) {
+            return;
+        }
+
+        $address = $citizen->address;
+        $phone = $citizen->phone;
+        $phone2 = $citizen->phone2;
+
+        return view(
+            'logged.citizen.view',
+            compact(
+                'citizen',
+                'address',
+                'phone',
+                'phone2'
+            )
+        );
+    }
 }

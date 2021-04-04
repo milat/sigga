@@ -12,16 +12,15 @@
 
                 @if ($request)
                     <div class="row">
-                        <div class="col-12 col-md-6 col-lg-4">
+                        <div class="col-12 col-md-12 col-lg-6">
                             <div class="form-group">
                                 <label for="requester" class='required'>{{$language::get('request_requester')}}</label>
-                                <input type="text" disabled="true" class="form-control" id="solicitante" value="{{$requester}}">
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6 col-lg-2">
-                            <div class="form-group">
-                                <label for="requester_type" class='required'>{{$language::get('request_requester_type')}}</label>
-                                <input type="text" disabled="true" class="form-control" id="requester_type" value="{{$language::get($requesterType)}}">
+                                <div class="input-group">
+                                    <input type="text" disabled="true" class="form-control" id="solicitante" value="{{$request->requester()->type->id == 4 ? $request->requester()->trade : $request->requester()->name}} ({{$language::get($request->requesterType())}})">
+                                    <button class="btn btn-outline-secondary view" data-title="{{$request->requester()->type->id == 4 ? $request->requester()->trade : $request->requester()->name}} ({{$language::get($request->requesterType())}})" url="{{route($request->requester()->type->name.".view", $request->requester()->id)}}" type="button" title="{{$language::get('view_me')}}">
+                                        <x-bi-eye/>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">
@@ -136,7 +135,12 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label for="request_description" class='required'>{{$language::get('request_description')}}</label>
-                            <textarea class="form-control" id="request_description" name="request_description" rows="2" {{($request && Auth::user()->cant('request.update')) ? 'disabled' : '' }}>{{$request ? $request->description : old('request_description')}}</textarea>
+                            <textarea class="form-control @error('request_description') is-invalid @enderror" id="request_description" name="request_description" rows="2" {{($request && Auth::user()->cant('request.update')) ? 'disabled' : '' }}>{{$request ? $request->description : old('request_description')}}</textarea>
+                            @error('request_description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
                     </div>
                 </div>
@@ -185,3 +189,6 @@
         </form>
     </div>
 </div>
+
+@include('logged.common.modal')
+@include('logged.request.script_view_requester')

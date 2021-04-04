@@ -12,6 +12,7 @@
                         @can('user.update')
                             <th scope="col" class="text-center">{{$language::get('edit')}}</th>
                         @endcan
+                        <th scope="col" class="text-center">{{$language::get('view')}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +28,11 @@
                                     <a href="{{route('user.edit', $user->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('user'))}} {{$user->name}}"><x-bi-pencil-square/></a>
                                 </td>
                             @endcan
+                            <td class="text-center">
+                                <a class='view' href='javascript:;' title="{{$language::get('view_me')}}" url='{{route("user.view", $user->id)}}' data-title="{{$user->name}}">
+                                    <x-bi-eye/>
+                                </a>
+                            </td>
                         </tr>
 
                     @empty
@@ -47,3 +53,7 @@
 <div class="d-flex justify-content-center">
     {!! $users->links() !!}
 </div>
+
+@include('logged.common.modal')
+
+@include('logged.request.script_view_requester')

@@ -102,6 +102,7 @@ abstract class GenerateService
     {
         foreach (config('generate.category') as $category) {
             $category['office_id'] = $office->id;
+            $category['colour'] = '#'.substr(md5(rand()), 0, 6);
             if (!RequestCategory::create($category)) {
                 return false;
             }

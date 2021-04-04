@@ -17,6 +17,9 @@
             <a class="nav-link {{ (!\Session::has('tab') || (\Session::has('tab') && \Session::get('tab') == 'data')) ? 'active' : '' }}" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="{{ (\Session::has('tab') && \Session::get('tab') == 'data') ? 'true' : 'false' }}">{{$language::get('request')}}</a>
         </li>
         <li class="nav-item">
+            <a class="nav-link {{ (\Session::has('tab') && \Session::get('tab') == 'document') ? 'active' : '' }}" id="document-tab" data-toggle="tab" href="#document" role="tab" aria-controls="document" aria-selected="{{ (\Session::has('tab') && \Session::get('tab') == 'document') ? 'true' : 'false' }}">{{$language::get('document')}}</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ (\Session::has('tab') && \Session::get('tab') == 'progress') ? 'active' : '' }}" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="{{ (\Session::has('tab') && \Session::get('tab') == 'progress') ? 'true' : 'false' }}">{{$language::get('progress')}}</a>
         </li>
         <li class="nav-item">
@@ -27,6 +30,9 @@
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade {{ (!\Session::has('tab') || (\Session::has('tab') && \Session::get('tab') == 'data')) ? 'show active' : '' }}" id="data" role="tabpanel" aria-labelledby="data-tab">
             @include('logged.request.form')
+        </div>
+        <div class="tab-pane fade {{ (\Session::has('tab') && \Session::get('tab') == 'document') ? 'show active' : '' }}" id="document" role="tabpanel" aria-labelledby="document-tab">
+            @include('logged.request.document')
         </div>
         <div class="tab-pane fade {{ (\Session::has('tab') && \Session::get('tab') == 'progress') ? 'show active' : '' }}" id="progress" role="tabpanel" aria-labelledby="progress-tab">
             @include('logged.request.progress')

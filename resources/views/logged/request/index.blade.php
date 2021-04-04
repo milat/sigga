@@ -11,12 +11,22 @@
         </div>
 
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-8">
+            <div class="col-12 col-md-4 col-lg-5">
                 <div class="form-group">
                     <input type="text" class="form-control" id="request_search" placeholder="{{$language::get('search')}} {{strtolower($language::get('requests'))}}" />
                 </div>
             </div>
-            <div class="col-12 col-md-4 col-lg-2 d-none d-md-block">
+            <div class="col-6 col-md-3 col-lg-3 d-none d-md-block">
+                <div class="form-group">
+                    <select id="category_id" class="form-control combo @error('status_id') is-invalid @enderror" name="status_id">
+                        <option value="0">{{$language::get('all')}} {{strtolower($language::get('request_category_id'))}}s</option>
+                        @foreach ($categories as $category)
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2 d-none d-md-block">
                 <div class="form-group">
                     <select id="status_id" class="form-control combo @error('status_id') is-invalid @enderror" name="status_id">
                         <option value="0">{{$language::get('all')}} {{strtolower($language::get('request_status_id'))}}</option>

@@ -40,7 +40,6 @@ return [
         ['name' => 'Transporte', 'is_active' => true],
         ['name' => 'Saúde', 'is_active' => true],
         ['name' => 'Emprego / Cursos', 'is_active' => true],
-        ['name' => 'Esporte', 'is_active' => true],
         ['name' => 'Ajuda de custo', 'is_active' => true],
         ['name' => 'Reclamação', 'is_active' => true],
         ['name' => 'Iluminação', 'is_active' => true],

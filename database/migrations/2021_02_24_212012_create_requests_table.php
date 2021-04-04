@@ -20,6 +20,7 @@ class CreateRequestsTable extends Migration
             $table->unsignedBigInteger('owner_type_id');
             $table->unsignedBigInteger('owner_id');
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('document_id')->nullable();
             $table->unsignedBigInteger('status_id');
             $table->string('title', 100);
             $table->longText('description');
@@ -30,6 +31,7 @@ class CreateRequestsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('owner_type_id')->references('id')->on('owner_types');
             $table->foreign('category_id')->references('id')->on('request_categories');
+            $table->foreign('document_id')->references('id')->on('documents');
             $table->foreign('status_id')->references('id')->on('request_statuses');
         });
     }

@@ -16,6 +16,8 @@ class CreateDocumentTypesTable extends Migration
         Schema::create('document_types', function (Blueprint $table) {
             $table->id();
             $table->string('name', 30);
+            $table->boolean('can_request')->default(true);
+            $table->boolean('has_deadline')->default(false);
         });
     }
 

@@ -122,4 +122,16 @@ class Organization extends Model
                     ->orderBy('trade')
                     ->get();
     }
+
+    /**
+     *  Returns distinct branches
+     *
+     *  @return array
+     */
+    public static function getAllBranches()
+    {
+        return self::select('branch')
+                    ->where('office_id', Auth::user()->office_id)
+                    ->distinct()->get();
+    }
 }

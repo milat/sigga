@@ -12,13 +12,15 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
 use App\Repositories\CitizenRepository;
 use App\Repositories\RequestRepository;
+use App\Repositories\DocumentRepository;
 use App\Repositories\OwnerTypeRepository;
 use Illuminate\Http\Request as HttpRequest;
+use App\Repositories\DocumentTypeRepository;
 use App\Repositories\OrganizationRepository;
-use App\Repositories\RequestAttachmentRepository;
 use App\Repositories\RequestStatusRepository;
 use App\Repositories\RequestCategoryRepository;
 use App\Repositories\RequestProgressRepository;
+use App\Repositories\RequestAttachmentRepository;
 
 class RequestController extends Controller
 {
@@ -40,8 +42,9 @@ class RequestController extends Controller
     public function index()
     {
         $this->firewall('request');
+        $categories = RequestCategoryRepository::getActives();
         $status = RequestStatusRepository::getAll();
-        return view('logged.request.index', compact('status'));
+        return view('logged.request.index', compact('categories', 'status'));
     }
 
     /**
@@ -56,7 +59,8 @@ class RequestController extends Controller
         $this->firewall('request');
         $query = $httpRequest->get('query') ?? '';
         $statusId = $httpRequest->get('status') ?? null;
-        $requests = RequestRepository::search($query, $statusId);
+        $categoryId = $httpRequest->get('category') ?? null;
+        $requests = RequestRepository::search($query, $categoryId, $statusId);
         return view('logged.request.search', compact('requests'));
     }
 
@@ -148,6 +152,7 @@ class RequestController extends Controller
         $status = RequestStatusRepository::getAll();
         $requester = $request->requester();
         $requesterType = $request->requesterType();
+        $types = DocumentTypeRepository::all();
 
         return view(
             'logged.request.view',
@@ -160,7 +165,8 @@ class RequestController extends Controller
                 'categories',
                 'status',
                 'requester',
-                'requesterType'
+                'requesterType',
+                'types'
             )
         );
     }
@@ -196,6 +202,79 @@ class RequestController extends Controller
         }
 
         return $this->couldntUpdate();
+    }
+
+    /**
+     *  Links document to request
+     *
+     *  @param HttpRequest $httpRequest
+     *  @param int $id
+     *
+     *  @return Redirector|RedirectResponse
+     */
+    public function link(HttpRequest $httpRequest, int $id)
+    {
+        $this->firewall('request.update');
+
+        $validated = $httpRequest->validate([
+            'document_id' => 'required'
+        ]);
+
+        $request = RequestRepository::find($id);
+        $document = DocumentRepository::find($httpRequest->document_id);
+
+        if (!$request || !$document) {
+            return $this->couldntFind();
+        }
+
+        if (RequestRepository::link($request, $document, $httpRequest)) {
+            return redirect()->route('request.view', $id)
+                            ->with('success', Language::get('update_success'))
+                            ->with('tab', 'document');
+        }
+
+        return redirect()->route('request.view', $id)
+                            ->withErrors('error', Language::get('update_error'))
+                            ->with('tab', 'document');
+    }
+
+    /**
+     *  Inserts new document and links it to request
+     *
+     *  @param HttpRequest $httpRequest
+     *  @param int $id
+     *
+     *  @return Redirector|RedirectResponse
+     */
+    public function document(HttpRequest $httpRequest, int $id)
+    {
+        $this->firewall('request.update');
+
+        $request = RequestRepository::find($id);
+
+        if (!$request) {
+            return $this->couldntFind();
+        }
+
+        $validated = $httpRequest->validate([
+            'document_code' => ['required', 'max:20'],
+            'document_type_id' => 'required',
+            'document_date' => 'required',
+            'document_title' => ['required'],
+            'document_file' => ['required', 'max:2048', 'mimes:pdf']
+        ]);
+
+        $document = DocumentRepository::insert($httpRequest);
+
+        if ($document && RequestRepository::link($request, $document, $httpRequest)) {
+            return redirect()->route('request.view', $id)
+                            ->with('success', Language::get('insert_success'))
+                            ->with('tab', 'document');
+        }
+
+        return redirect()->route('request.view', $id)
+                            ->withErrors('error', Language::get('insert_error'))
+                            ->with('tab', 'document');
     }
 
     /**
@@ -247,7 +326,7 @@ class RequestController extends Controller
 
         $validated = $httpRequest->validate([
             'attachment_title' => 'required',
-            'attachment_file' => 'required'
+            'attachment_file' => ['required', 'max:2048', 'mimes:pdf']
         ]);
 
         $request = RequestRepository::find($id);
@@ -297,5 +376,33 @@ class RequestController extends Controller
         }
 
         return $download;
+    }
+
+    /**
+     *  Returns requests with documents next to its deadlines
+     *
+     *  @return JsonResponse
+     */
+    public function warn()
+    {
+        $this->firewall('request');
+        $requests = RequestRepository::toWarn();
+
+        $json = [];
+
+        foreach ($requests as $request) {
+            $json[] = [
+                'request_id' => $request->request_id,
+                'document_type' => $request->document_type,
+                'document_code' => $request->document_code,
+                'category' => $request->category,
+                'document_date' => date('d/m/Y', strtotime($request->document_date)),
+                'owner_type' => Language::get($request->owner_type_name),
+                'owner' => $request->owner,
+                'url' => route('request.view', $request->request_id)
+            ];
+        }
+
+        return response()->json($json);
     }
 }

@@ -60,4 +60,29 @@ class Document extends Model
                     ->orderBy('title')
                     ->paginate(config('system.paginate'));
     }
+
+    /**
+     *  Searches for document to create options combo
+     *
+     *  @param string $query
+     *
+     *  @return array
+     */
+    public static function combo(string $query)
+    {
+        return self::join('document_types', 'document_types.id', '=', 'documents.document_type_id')
+                    ->where('documents.office_id', '=', Auth::user()->office_id)
+                    ->where(function ($where) use ($query) {
+                        $where->whereRaw('LOWER(documents.code) LIKE "%'.strtolower($query).'%"')
+                                ->orWhereRaw('LOWER(documents.title) LIKE "%'.strtolower($query).'%"')
+                                ->orWhereRaw('LOWER(documents.date) LIKE "%'.strtolower($query).'%"')
+                                ->orWhereRaw('LOWER(documents.file_name) LIKE "%'.strtolower($query).'%"');
+                    })
+                    ->where('document_types.can_request', true)
+                    ->orderBy('documents.document_type_id')
+                    ->orderBy('documents.code')
+                    ->orderBy('documents.date')
+                    ->orderBy('documents.title')
+                    ->get();
+    }
 }

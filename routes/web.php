@@ -48,6 +48,7 @@ Route::prefix(Friendly::get('users'))->name('user.')->middleware('auth')->group(
     Route::post('/'.Friendly::get('insert'), 'UserController@insert')->name('insert');
     Route::get('/'.Friendly::get('password'), 'UserController@password')->name('password');
     Route::put('/'.Friendly::get('password'), 'UserController@passwordAction')->name('password.action');
+    Route::get('/'.Friendly::get('view').'/{id}', 'UserController@view')->name('view');
 });
 
 /**
@@ -74,6 +75,7 @@ Route::prefix(Friendly::get('citizens'))->name('citizen.')->middleware('auth')->
     Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'CitizenController@update')->name('update');
     Route::get('/'.Friendly::get('create'), 'CitizenController@create')->name('create');
     Route::post('/'.Friendly::get('insert'), 'CitizenController@insert')->name('insert');
+    Route::get('/'.Friendly::get('view').'/{id}', 'CitizenController@view')->name('view');
 });
 
 /**
@@ -87,6 +89,7 @@ Route::prefix(Friendly::get('documents'))->name('document.')->middleware('auth')
     Route::get('/'.Friendly::get('create'), 'DocumentController@create')->name('create');
     Route::post('/'.Friendly::get('insert'), 'DocumentController@insert')->name('insert');
     Route::get('/'.Friendly::get('download').'/{id}', 'DocumentController@download')->name('download');
+    Route::get('/'.Friendly::get('combo'), 'DocumentController@combo')->name('combo');
 });
 
 /**
@@ -99,6 +102,7 @@ Route::prefix(Friendly::get('organizations'))->name('organization.')->middleware
     Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'OrganizationController@update')->name('update');
     Route::get('/'.Friendly::get('create'), 'OrganizationController@create')->name('create');
     Route::post('/'.Friendly::get('insert'), 'OrganizationController@insert')->name('insert');
+    Route::get('/'.Friendly::get('view').'/{id}', 'OrganizationController@view')->name('view');
 });
 
 /**
@@ -121,9 +125,12 @@ Route::prefix(Friendly::get('requests'))->name('request.')->middleware('auth')->
     Route::get('/'.Friendly::get('search').'/{query?}', 'RequestController@search')->name('search');
     Route::get('/'.Friendly::get('view').'/{id}', 'RequestController@view')->name('view');
     Route::put('/'.Friendly::get('view').'/{id}/'.Friendly::get('update'), 'RequestController@update')->name('update');
+    Route::post('/'.Friendly::get('link').'/{id}/', 'RequestController@link')->name('link');
+    Route::post('/'.Friendly::get('document').'/{id}/', 'RequestController@document')->name('document');
     Route::post('/'.Friendly::get('view').'/{id}/'.Friendly::get('progress'), 'RequestController@progress')->name('progress');
     Route::post('/'.Friendly::get('view').'/{id}/'.Friendly::get('attachment'), 'RequestController@attachment')->name('attachment');
     Route::get('/'.Friendly::get('view').'/{id}/'.Friendly::get('attachment').'/'.Friendly::get('download').'/{attachmentId}', 'RequestController@download')->name('download');
     Route::get('/'.Friendly::get('create'), 'RequestController@create')->name('create');
     Route::post('/'.Friendly::get('insert'), 'RequestController@insert')->name('insert');
+    Route::get('/'.Friendly::get('warn'), 'RequestController@warn')->name('warn');
 });

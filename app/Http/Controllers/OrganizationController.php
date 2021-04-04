@@ -66,6 +66,7 @@ class OrganizationController extends Controller
         $phone = false;
         $phone2 = false;
         $phoneType = PhoneTypeRepository::all();
+        $branches = OrganizationRepository::getAllBranches();
 
         return view(
             'logged.organization.form',
@@ -76,7 +77,8 @@ class OrganizationController extends Controller
                 'isAddressRequired',
                 'phone',
                 'phone2',
-                'phoneType'
+                'phoneType',
+                'branches'
             )
         );
     }
@@ -139,6 +141,7 @@ class OrganizationController extends Controller
         $phone = $organization->phone;
         $phone2 = $organization->phone2;
         $phoneType = PhoneTypeRepository::all();
+        $branches = OrganizationRepository::getAllBranches();
 
         return view(
             'logged.organization.form',
@@ -149,7 +152,8 @@ class OrganizationController extends Controller
                 'isAddressRequired',
                 'phone',
                 'phone2',
-                'phoneType'
+                'phoneType',
+                'branches'
             )
         );
     }
@@ -194,5 +198,36 @@ class OrganizationController extends Controller
         }
 
         return $this->couldntUpdate();
+    }
+
+    /**
+     *  Loads view page
+     *
+     *  @param HttpRequest $httpRequest
+     *  @param int $id
+     *
+     *  @return mixed
+     */
+    public function view(HttpRequest $httpRequest, int $id)
+    {
+        $organization = OrganizationRepository::find($id);
+
+        if (!$organization) {
+            return;
+        }
+
+        $address = $organization->address;
+        $phone = $organization->phone;
+        $phone2 = $organization->phone2;
+
+        return view(
+            'logged.organization.view',
+            compact(
+                'organization',
+                'address',
+                'phone',
+                'phone2'
+            )
+        );
     }
 }

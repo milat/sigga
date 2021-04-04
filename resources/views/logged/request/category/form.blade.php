@@ -19,7 +19,7 @@
                 <fieldset>
 
                     <div class="row">
-                        <div class="col-12 col-md-8 col-lg-9">
+                        <div class="col-12 col-md-8 col-lg-8">
                             <div class="form-group">
                                 <label for="category_name" class="required">{{$language::get('category_name')}}</label>
                                 <input type="text" class="form-control @error('category_name') is-invalid @enderror" id="category_name" name="category_name" placeholder="{{$language::get('category_name_placeholder')}}" maxlength="20" value="{{$category ? $category->name : old('category_name')}}">
@@ -30,12 +30,12 @@
                                 @enderror
                             </div>
                         </div>
-                        <!-- <div class="col-12 col-md-1">
+                        <div class="col-12 col-md-1">
                             <div class="form-group">
-                                <label for="cor">{{$language::get('category_colour')}}:</label>
-                                <input type="color" class="form-control" id="cor" name="cor" value="{{$category ? $category->colour : '#f8f9fa'}}">
+                                <label for="category_colour">{{$language::get('category_colour')}}:</label>
+                                <input type="color" class="form-control" id="category_colour" name="category_colour" value="{{$category ? $category->colour : '#'.substr(md5(rand()), 0, 6)}}">
                             </div>
-                        </div> -->
+                        </div>
                         <div class="col-12 col-md-4 col-lg-3">
                             <div class="form-group">
                                 <label for="category_is_active" class="required">{{$language::get('category_is_active')}}</label>

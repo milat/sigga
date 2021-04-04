@@ -78,7 +78,7 @@ class UserController extends Controller
 
         $validated = $httpRequest->validate([
             'user_name' => ['required', 'max:100'],
-            'user_email' => ['required', 'email', Rule::unique('users'), 'max:100'],
+            'user_email' => ['required', 'email', Rule::unique('users', 'email'), 'max:100'],
             'user_role_id' => 'required',
             'user_identity_document' => ['nullable', 'cpf', 'formato_cpf', 'max:20']
         ]);
@@ -132,7 +132,7 @@ class UserController extends Controller
 
         $validated = $httpRequest->validate([
             'user_name' => ['required', 'max:100'],
-            'user_email' => ['required', 'email', Rule::unique('users')->ignore($user->id), 'max:100'],
+            'user_email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user->id), 'max:100'],
             'user_role_id' => 'required',
             'user_identity_document' => ['nullable', 'cpf', 'formato_cpf', 'max:20']
         ]);
@@ -142,6 +142,24 @@ class UserController extends Controller
         }
 
         return $this->couldntUpdate();
+    }
+
+    /**
+     *  Loads view page
+     *
+     *  @param int $id
+     *
+     *  @return RedirectResponse|View|Factory
+     */
+    public function view(int $id)
+    {
+        $user = UserRepository::find($id);
+
+        if (!$user) {
+            return;
+        }
+
+        return view('logged.user.view', compact('user'));
     }
 
     /**
@@ -165,8 +183,8 @@ class UserController extends Controller
     {
         $validated = $httpRequest->validate([
             'password_current' => ['required', 'max:100'],
-            'password_new' => ['required', 'max:100'],
-            'password_confirm' => ['required', 'max:100'],
+            'password_new' => ['required', 'min:6', 'max:100', 'same:password_confirm'],
+            'password_confirm' => ['required'],
         ]);
 
         if (!UserRepository::auth(Auth::user()->email, $httpRequest->password_current)) {

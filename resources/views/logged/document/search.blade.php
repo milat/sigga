@@ -22,7 +22,14 @@
                         <tr>
                             <td scope="row" style="white-space: nowrap;">{{$document->type->name}}</td>
                             <td style="white-space: nowrap;">{{$document->code}}</td>
-                            <td style="white-space: nowrap;">{{$document->title}}</td>
+                            <td style="white-space: nowrap;">
+                                <span title="{{$document->title}}">
+                                    {{substr($document->title, 0, 30)}}
+                                    @if (strlen($document->title) > 30)
+                                        [...]
+                                    @endif
+                                </span>
+                            </td>
                             <td style="white-space: nowrap;">{{$document->file_name}}</td>
                             <td class="text-center" style="white-space: nowrap;"> {{ date('d/m/Y', strtotime($document->date)) }}</td>
                             @can('document.update')

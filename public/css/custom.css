@@ -50,3 +50,17 @@ li .select2-results__group {
 .clickable_row {
     cursor: pointer;
 }
+
+footer {
+    position:fixed;
+    bottom:0;
+    width:100%;
+    text-align: center !important;
+    color: gray;
+    font-size: small;
+}
+
+.warn-badge-right {
+    float:right;
+    margin-bottom:-10px;
+}

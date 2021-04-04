@@ -7,7 +7,7 @@
                 <label for="phone_phone_type_id" class='required'>{{$language::get('phone_type_id')}} {{$language::get('phone_main')}}</label>
                 <select id="phone_phone_type_id" class="form-control combo @error('phone_phone_type_id') is-invalid @enderror" name="phone_phone_type_id">
                     @foreach ($phoneType as $type)
-                        <option {{ (($phone && $phone->phone_type_id == $type->id) || (old('phone_phone_type_id') == $type->id) || (isset($organization) && $type->id == 3)) ? 'selected' : '' }} value="{{$type->id}}">{{$type->name}}</option>
+                        <option {{ (($phone && $phone->phone_type_id == $type->id) || (old('phone_phone_type_id') == $type->id)) ? 'selected' : '' }} value="{{$type->id}}">{{$type->name}}</option>
                     @endforeach
                 </select>
                 @error('phone_phone_type_id')

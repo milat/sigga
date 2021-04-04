@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -25,6 +27,7 @@ class Request extends Model
         'owner_type_id',
         'owner_id',
         'category_id',
+        'document_id',
         'status_id',
         'title',
         'description',
@@ -55,6 +58,15 @@ class Request extends Model
     public function category()
     {
         return $this->hasOne(RequestCategory::class, 'id', 'category_id')
+                    ->where('office_id', Auth::user()->office_id);
+    }
+
+    /**
+     *  @return HasOne
+     */
+    public function document()
+    {
+        return $this->hasOne(Document::class, 'id', 'document_id')
                     ->where('office_id', Auth::user()->office_id);
     }
 
@@ -117,12 +129,12 @@ class Request extends Model
     public function requester()
     {
         if ($this->citizen) {
-            return $this->citizen->name;
+            return $this->citizen;
         } elseif ($this->organization) {
-            return $this->organization->trade;
+            return $this->organization;
         }
 
-        return $this->user->name;
+        return $this->user;
     }
 
     /**
@@ -143,11 +155,12 @@ class Request extends Model
      *  Searches for request by query
      *
      *  @param string $query
+     *  @param int $categoryId
      *  @param int $statusId
      *
      *  @return array
      */
-    public static function search(string $query, int $statusId = null)
+    public static function search(string $query, int $categoryId = null, int $statusId = null)
     {
         $sql = self::select('requests.*')
                     ->join('request_categories', 'request_categories.id', '=', 'requests.category_id')
@@ -168,6 +181,10 @@ class Request extends Model
                         self::filter($where, $query);
                     });
 
+        if ($categoryId) {
+            $sql->where('category_id', $categoryId);
+        }
+
         if ($statusId) {
             $sql->where('status_id', $statusId);
         }
@@ -175,6 +192,48 @@ class Request extends Model
         return $sql->orderBy('requests.status_id')
                     ->orderBy('requests.created_at', 'desc')
                     ->paginate(config('system.paginate'));
+    }
+
+    /**
+     *  Returns requests with documents next to its deadlines
+     *
+     *  @return array
+     */
+    public static function toWarn()
+    {
+        return self::select(DB::raw('
+                        requests.id as request_id,
+                        request_categories.name as category,
+                        document_types.name as document_type,
+                        documents.code as document_code,
+                        documents.date as document_date,
+                        owner_types.name as owner_type_name,
+                        COALESCE(citizens.name,organizations.trade, users.name) as owner
+                    '))
+                    ->join('request_categories', 'request_categories.id', '=', 'requests.category_id')
+                    ->join('documents', 'documents.id', '=', 'requests.document_id')
+                    ->join('document_types', 'document_types.id', '=', 'documents.document_type_id')
+                    ->join('owner_types', 'owner_types.id', '=', 'requests.owner_type_id')
+                    ->leftJoin('citizens', function($leftJoin) {
+                        $leftJoin->on('citizens.owner_type_id', '=', 'requests.owner_type_id');
+                        $leftJoin->on('citizens.id', '=', 'requests.owner_id');
+                    })
+                    ->leftJoin('organizations', function($leftJoin) {
+                        $leftJoin->on('organizations.owner_type_id', '=', 'requests.owner_type_id');
+                        $leftJoin->on('organizations.id', '=', 'requests.owner_id');
+                    })
+                    ->leftJoin('users', function($leftJoin) {
+                        $leftJoin->on('users.owner_type_id', '=', 'requests.owner_type_id');
+                        $leftJoin->on('users.id', '=', 'requests.owner_id');
+                    })
+                    ->where('documents.office_id', '=', Auth::user()->office_id)
+                    ->where('requests.office_id', '=', Auth::user()->office_id)
+                    ->where('document_types.has_deadline', true)
+                    ->where('requests.status_id', config('request_statuses.sent.id'))
+                    ->whereDate('documents.date', '<=', Carbon::now()->subDays(config('system.document_request_deadline')))
+                    ->orderBy('documents.date')
+                    ->orderBy('requests.id')
+                    ->get();
     }
 
     /**

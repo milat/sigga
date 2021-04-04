@@ -20,7 +20,7 @@ class CreateDocumentsTable extends Migration
             $table->unsignedBigInteger('document_type_id');
             $table->date('date');
             $table->string('code', 20)->nullable();
-            $table->string('title', 100);
+            $table->longText('title');
             $table->string('file_name', 100);
             $table->string('file_extension', 10);
             $table->string('file_path', 255);

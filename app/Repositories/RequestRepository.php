@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Document;
 use App\Models\Request;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Auth;
@@ -24,13 +25,14 @@ class RequestRepository extends Repository
      *  Searches for request by query and/or status
      *
      *  @param string $query
+     *  @param int $categoryId
      *  @param int $statusId
      *
      *  @return array
      */
-    public static function search(string $query = null, int $statusId = null)
+    public static function search(string $query = null, int $categoryId = null, int $statusId = null)
     {
-        return Request::search($query, $statusId);
+        return Request::search($query, $categoryId, $statusId);
     }
 
     /**
@@ -71,6 +73,34 @@ class RequestRepository extends Repository
     {
         self::set($request, $httpRequest);
         return $request->save();
+    }
+
+    /**
+     *  Updates request
+     *
+     *  @param Request $request
+     *  @param Document $document
+     *  @param HttpRequest $httpRequest
+     *
+     *  @return bool
+     */
+    public static function link(Request $request, Document $document, HttpRequest $httpRequest)
+    {
+        $request->document_id = $document->id;
+        if ($httpRequest->update_status) {
+            $request->status_id = config('request_statuses.sent.id');
+        }
+        return $request->save();
+    }
+
+    /**
+     *  Returns requests with documents next to its deadlines
+     *
+     *  @return array
+     */
+    public static function toWarn()
+    {
+        return Request::toWarn();
     }
 
     /**

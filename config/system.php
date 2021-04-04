@@ -17,6 +17,9 @@ return [
     // Default date format
     'date_format' => 'd/m/Y',
 
+    // Amount of days to warn about documents sent
+    'document_request_deadline' => 20,
+
     // Password used to create new users
     'generate_password' => '123456',
 ];

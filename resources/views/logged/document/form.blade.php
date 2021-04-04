@@ -39,20 +39,8 @@
                         <div class="col-12 col-md-6 col-lg-2">
                             <div class="form-group">
                                 <label for="document_code" class="required">{{$language::get('document_code')}}</label>
-                                <input type="text" class="form-control @error('document_code') is-invalid @enderror" id="document_code" name="document_code" maxlength="20" placeholder="{{$language::get('document_code_placeholder')}}" value="{{$document ? $document->code : old('document_code')}}">
+                                <input type="text" class="form-control document_number @error('document_code') is-invalid @enderror" id="document_code" name="document_code" maxlength="20" placeholder="{{$language::get('document_code_placeholder')}}" value="{{$document ? $document->code : old('document_code')}}">
                                 @error('document_code')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-5 col-xl-6">
-                            <div class="form-group">
-                                <label for="document_title" class="required">{{$language::get('document_title')}}</label>
-                                <input type="text" class="form-control @error('document_title') is-invalid @enderror" id="document_title" name="document_title" maxlength="100" placeholder="{{$language::get('document_title_placeholder')}}" value="{{$document ? $document->title : old('document_title')}}">
-                                @error('document_title')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -71,24 +59,33 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="document_file" class="{{ $document ? '' : 'required' }}">{{$language::get('document_file')}}</label>
+                                <input type="file" class="form-control-file @error('document_file') is-invalid @enderror" id="document_file" name="document_file">
+                                @error('document_file')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
-                                <label for="document_file" class="{{ $document ? '' : 'required' }}">{{$language::get('document_file')}}</label>
-                                <input type="file" class="form-control-file" id="document_file" name="document_file">
+                                <label for="document_title" class="required">{{$language::get('document_title')}}</label>
+                                <textarea class="form-control @error('document_title') is-invalid @enderror" id="document_title" name="document_title" rows="2">{{$document ? $document->title : old('document_title')}}</textarea>
+                                @error('document_title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
-
-                    @if ($document)
-                        <div class="row mb-3">
-                            <div class="col-12">
-                                <a href="{{route('document.download', $document->id)}}">{{$language::get('download')}} {{$document->file_name}}</a>
-                            </div>
-                        </div>
-                    @endif
 
                     <div class="row">
                         <div class="col-12">

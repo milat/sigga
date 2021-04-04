@@ -38,7 +38,7 @@ class DocumentRepository extends Repository
      *
      *  @param HttpRequest $httpRequest
      *
-     *  @return bool
+     *  @return Document|bool
      */
     public static function insert(HttpRequest $httpRequest)
     {
@@ -47,7 +47,11 @@ class DocumentRepository extends Repository
         self::set($document, $httpRequest);
         self::setFile($document, $httpRequest);
 
-        return $document->save();
+        if ($document->save()) {
+            return $document;
+        }
+
+        return false;
     }
 
     /**
@@ -64,6 +68,31 @@ class DocumentRepository extends Repository
         self::setFile($document, $httpRequest);
 
         return $document->save();
+    }
+
+    /**
+     *  Searches for document by code
+     *
+     *  @param HttpRequest $httpRequest
+     *
+     *  @return array
+     */
+    public static function combo(HttpRequest $httpRequest)
+    {
+        $code = $httpRequest->get('q');
+        $combo = [];
+
+        foreach (Document::combo($code) as $document) {
+            $combo['results'][] = [
+                'id' => $document->id,
+                'text' => $document->type->name." Nº ".$document->code.
+                            ", enviado em ".date('d/m/Y', strtotime($document->date)).
+                            ": ".substr($document->title, 0, 100).
+                            ((strlen($document->title) > 100) ? '[...]' : '')
+            ];
+        }
+
+        return $combo;
     }
 
     /**

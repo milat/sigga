@@ -10,6 +10,7 @@ use Illuminate\Contracts\View\Factory;
 use App\Repositories\DocumentRepository;
 use Illuminate\Http\Request as HttpRequest;
 use App\Repositories\DocumentTypeRepository;
+use League\CommonMark\Block\Renderer\DocumentRenderer;
 
 class DocumentController extends Controller
 {
@@ -73,11 +74,11 @@ class DocumentController extends Controller
         $this->firewall('document.insert');
 
         $validated = $httpRequest->validate([
-            'document_code' => ['nullable', 'max:20'],
+            'document_code' => ['required', 'max:20'],
             'document_type_id' => 'required',
             'document_date' => 'required',
-            'document_title' => ['required', 'max:100'],
-            'document_file' => 'required'
+            'document_title' => ['required'],
+            'document_file' => ['required', 'max:2048', 'mimes:pdf']
         ]);
 
         if (DocumentRepository::insert($httpRequest)) {
@@ -122,10 +123,11 @@ class DocumentController extends Controller
         $this->firewall('document.update');
 
         $validated = $httpRequest->validate([
-            'document_code' => ['nullable', 'max:20'],
+            'document_code' => ['required', 'max:20'],
             'document_type_id' => 'required',
             'document_date' => 'required',
-            'document_title' => ['required', 'max:100'],
+            'document_title' => ['required'],
+            'document_file' => ['nullable', 'max:2048', 'mimes:pdf']
         ]);
 
         $document = DocumentRepository::find($id);
@@ -134,11 +136,24 @@ class DocumentController extends Controller
             return $this->couldntFind();
         }
 
-        if (documentRepository::update($document, $httpRequest)) {
+        if (DocumentRepository::update($document, $httpRequest)) {
             return $this->hasBeenUpdated();
         }
 
         return $this->couldntUpdate();
+    }
+
+    /**
+     *  Searches for document by code
+     *
+     *  @param HttpRequest $httpRequest
+     *
+     *  @return JsonResponse
+     */
+    public function combo(HttpRequest $httpRequest)
+    {
+        $combo = DocumentRepository::combo($httpRequest);
+        return response()->json($combo);
     }
 
     /**

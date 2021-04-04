@@ -87,6 +87,14 @@ class OrganizationRepository extends Repository
     }
 
     /**
+     *  Returns office's distinct branches
+     */
+    public static function getAllBranches()
+    {
+        return Organization::getAllBranches();
+    }
+
+    /**
      *  Sets organization model with HttpRequest
      *
      *  @param Organization $organization
