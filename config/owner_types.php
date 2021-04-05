@@ -5,22 +5,22 @@
  */
 return [
 
-    'offices' => [
+    'office' => [
         'id' => 1,
         'can_request' => false
     ],
 
-    'users' => [
+    'user' => [
         'id' => 2,
         'can_request' => true
     ],
 
-    'citizens' => [
+    'citizen' => [
         'id' => 3,
         'can_request' => true
     ],
 
-    'organizations' => [
+    'organization' => [
         'id' => 4,
         'can_request' => true
     ]
