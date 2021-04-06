@@ -41,7 +41,7 @@ Route::prefix(Friendly::get('superuser'))->name('superuser.')->group(function ()
  */
 Route::prefix(Friendly::get('users'))->name('user.')->middleware('auth')->group(function () {
     Route::get('/', 'UserController@index')->name('index');
-    Route::get('/'.Friendly::get('search').'/{query?}', 'UserController@search')->name('search');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'UserController@search')->name('search')->where('query', '(.*)');
     Route::get('/'.Friendly::get('edit').'/{id}', 'UserController@edit')->name('edit');
     Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'UserController@update')->name('update');
     Route::get('/'.Friendly::get('create'), 'UserController@create')->name('create');
@@ -56,7 +56,7 @@ Route::prefix(Friendly::get('users'))->name('user.')->middleware('auth')->group(
  */
 Route::prefix(Friendly::get('roles'))->name('role.')->middleware('auth')->group(function () {
     Route::get('/', 'RoleController@index')->name('index');
-    Route::get('/'.Friendly::get('search').'/{query?}', 'RoleController@search')->name('search');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'RoleController@search')->name('search')->where('query', '(.*)');
     Route::get('/'.Friendly::get('edit').'/{id}', 'RoleController@edit')->name('edit');
     Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'RoleController@update')->name('update');
     Route::get('/'.Friendly::get('create'), 'RoleController@create')->name('create');
@@ -70,7 +70,7 @@ Route::prefix(Friendly::get('roles'))->name('role.')->middleware('auth')->group(
  */
 Route::prefix(Friendly::get('citizens'))->name('citizen.')->middleware('auth')->group(function () {
     Route::get('/', 'CitizenController@index')->name('index');
-    Route::get('/'.Friendly::get('search').'/{query?}', 'CitizenController@search')->name('search');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'CitizenController@search')->name('search')->where('query', '(.*)');
     Route::get('/'.Friendly::get('edit').'/{id}', 'CitizenController@edit')->name('edit');
     Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'CitizenController@update')->name('update');
     Route::get('/'.Friendly::get('create'), 'CitizenController@create')->name('create');
@@ -83,7 +83,7 @@ Route::prefix(Friendly::get('citizens'))->name('citizen.')->middleware('auth')->
  */
 Route::prefix(Friendly::get('documents'))->name('document.')->middleware('auth')->group(function () {
     Route::get('/', 'DocumentController@index')->name('index');
-    Route::get('/'.Friendly::get('search').'/{query?}', 'DocumentController@search')->name('search');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'DocumentController@search')->name('search')->where('query', '(.*)')->where('query', '(.*)');
     Route::get('/'.Friendly::get('edit').'/{id}', 'DocumentController@edit')->name('edit');
     Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'DocumentController@update')->name('update');
     Route::get('/'.Friendly::get('create'), 'DocumentController@create')->name('create');
@@ -97,7 +97,7 @@ Route::prefix(Friendly::get('documents'))->name('document.')->middleware('auth')
  */
 Route::prefix(Friendly::get('organizations'))->name('organization.')->middleware('auth')->group(function () {
     Route::get('/', 'OrganizationController@index')->name('index');
-    Route::get('/'.Friendly::get('search').'/{query?}', 'OrganizationController@search')->name('search');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'OrganizationController@search')->name('search')->where('query', '(.*)');
     Route::get('/'.Friendly::get('edit').'/{id}', 'OrganizationController@edit')->name('edit');
     Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'OrganizationController@update')->name('update');
     Route::get('/'.Friendly::get('create'), 'OrganizationController@create')->name('create');
@@ -110,7 +110,7 @@ Route::prefix(Friendly::get('organizations'))->name('organization.')->middleware
  */
 Route::prefix(Friendly::get('categories'))->name('category.')->middleware('auth')->group(function () {
     Route::get('/', 'RequestCategoryController@index')->name('index');
-    Route::get('/'.Friendly::get('search').'/{query?}', 'RequestCategoryController@search')->name('search');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'RequestCategoryController@search')->name('search')->where('query', '(.*)');
     Route::get('/'.Friendly::get('edit').'/{id}', 'RequestCategoryController@edit')->name('edit');
     Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'RequestCategoryController@update')->name('update');
     Route::get('/'.Friendly::get('create'), 'RequestCategoryController@create')->name('create');
@@ -122,7 +122,7 @@ Route::prefix(Friendly::get('categories'))->name('category.')->middleware('auth'
  */
 Route::prefix(Friendly::get('requests'))->name('request.')->middleware('auth')->group(function() {
     Route::get('/', 'RequestController@index')->name('index');
-    Route::get('/'.Friendly::get('search').'/{query?}', 'RequestController@search')->name('search');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'RequestController@search')->name('search')->where('query', '(.*)');
     Route::get('/'.Friendly::get('view').'/{id}', 'RequestController@view')->name('view');
     Route::put('/'.Friendly::get('view').'/{id}/'.Friendly::get('update'), 'RequestController@update')->name('update');
     Route::post('/'.Friendly::get('link').'/{id}/', 'RequestController@link')->name('link');
