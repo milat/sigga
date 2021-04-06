@@ -14,7 +14,7 @@ abstract class PopulateService
 {
     public static function run($officeId, $userId)
     {
-        // self::documents($officeId, $userId);
+        self::documents($officeId, $userId);
         self::citizens($officeId, $userId);
     }
 
