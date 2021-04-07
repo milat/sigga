@@ -70,7 +70,8 @@ class Document extends Model
      */
     public static function combo(string $query)
     {
-        return self::join('document_types', 'document_types.id', '=', 'documents.document_type_id')
+        return self::select('documents.id', 'document_types.name', 'documents.code', 'documents.date', 'documents.title')
+                    ->join('document_types', 'document_types.id', '=', 'documents.document_type_id')
                     ->where('documents.office_id', '=', Auth::user()->office_id)
                     ->where(function ($where) use ($query) {
                         $where->whereRaw('LOWER(documents.code) LIKE "%'.strtolower($query).'%"')

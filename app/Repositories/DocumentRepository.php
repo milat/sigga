@@ -85,7 +85,7 @@ class DocumentRepository extends Repository
         foreach (Document::combo($code) as $document) {
             $combo['results'][] = [
                 'id' => $document->id,
-                'text' => $document->type->name." Nº ".$document->code.
+                'text' => $document->name." Nº ".$document->code.
                             ", enviado em ".date('d/m/Y', strtotime($document->date)).
                             ": ".substr($document->title, 0, 100).
                             ((strlen($document->title) > 100) ? '[...]' : '')
