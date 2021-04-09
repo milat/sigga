@@ -34,7 +34,7 @@ class Citizen extends Model
      */
     public static function getOwnerTypeId()
     {
-        return config('owner_types.citizens.id');
+        return config('owner_types.citizen.id');
     }
 
     /**

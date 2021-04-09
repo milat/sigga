@@ -37,7 +37,7 @@ class Organization extends Model
      */
     public static function getOwnerTypeId()
     {
-        return config('owner_types.organizations.id');
+        return config('owner_types.organization.id');
     }
 
     /**
