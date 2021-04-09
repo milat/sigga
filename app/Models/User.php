@@ -63,6 +63,14 @@ class User extends Authenticatable
     }
 
     /**
+     *  @return BelongsTo
+     */
+    public function office()
+    {
+        return $this->belongsTo(Office::class, 'office_id', 'id');
+    }
+
+    /**
      *  @return HasOne
      */
     public function type()

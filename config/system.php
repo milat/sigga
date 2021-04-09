@@ -8,6 +8,9 @@ return [
     // Default pagination
     'paginate' => 10,
 
+    // Whatsapp default breakline
+    'whatsapp_breakline' => '%0D%0A%0D%0A',
+
     // Default request attachments path
     'request_attachments_path' => 'offices/<office_id>/attachments/<request_id>/<file_name>',
 

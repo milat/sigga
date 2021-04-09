@@ -74,6 +74,8 @@
             @else
                 {{$language::get('request_no_document_linked')}}
             @endif
+
+            @include('logged.request.whatsapp')
         </fieldset>
     </div>
 </div>

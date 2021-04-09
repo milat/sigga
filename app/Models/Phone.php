@@ -33,4 +33,9 @@ class Phone extends Model
     {
         return $this->hasOne(PhoneType::class, 'id', 'phone_type_id');
     }
+
+    public function getOnlyNumber()
+    {
+        return preg_replace('/\D/', '', $this->number);
+    }
 }

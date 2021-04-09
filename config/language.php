@@ -201,6 +201,11 @@ return [
 
         'about_system' => 'Sigga é um sistema para gestão de gabinete. Seu propósito é gerenciar os cadastros, demandas e documentação para que o agente político e seus assessores tenham total controle e visão das atividadaes em andamento e as já concluídas, mantendo o histórico e dados para análise.',
 
+        'feedback_sent' => '<capslock_office_name> ESTÁ COM VOCÊ!<break><break>Informamos que seu pedido referente à <request_title> está em processo! <office_name> protocolou no dia <document_date>: <document_type_name> nº <document_code>. Aguarde que em breve lhe informaremos mais sobre o pedido.<break><break><office_name>.',
+
+        'feedback_done' => '',
+
         'footer' => 'developed by milat.dev - '.date('Y'),
+
     ]
 ];

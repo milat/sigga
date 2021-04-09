@@ -144,6 +144,8 @@
                         </div>
                     </div>
                 </div>
+
+                @include('logged.request.whatsapp')
             </fieldset>
 
             @if (($request && Auth::user()->can('request.update')) || !$request)
