@@ -11,6 +11,10 @@ abstract class Friendly
         }
         $text = Language::get($label, $language);
 
+        if (!$text) {
+            return '';
+        }
+
         Text::removeAccent($text);
         Text::replaceSpaces($text);
 
