@@ -11,10 +11,15 @@ return [
     // Whatsapp default breakline
     'whatsapp_breakline' => '%0D%0A%0D%0A',
 
-    // Default request attachments path
-    'request_attachments_path' => 'offices/<office_id>/attachments/<request_id>/<file_name>',
+    'file_storage' => env('FILE_STORAGE'),
 
-    // Default documents path
+    // Default attachments file path
+    'attachments_path' => 'offices/<office_id>/attachments/<file_name>',
+
+    // Default request attachments file path
+    'request_attachments_path' => 'offices/<office_id>/request_attachments/<request_id>/<file_name>',
+
+    // Default documents file path
     'documents_path' => 'offices/<office_id>/documents/<file_name>',
 
     // Default date format

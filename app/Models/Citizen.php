@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Citizen extends Model
 {
@@ -20,37 +21,31 @@ class Citizen extends Model
      */
     protected $fillable = [
         'office_id',
-        'user_id',
         'name',
         'identity_document',
         'email',
         'birth',
         'note',
-        'is_active'
+        'is_active',
+        'created_by_user_id',
+        'updated_by_user_id'
     ];
 
     /**
-     *  @return int
+     *  @return HasOne
      */
-    public static function getOwnerTypeId()
+    public function creator()
     {
-        return config('owner_types.citizen.id');
+        return $this->hasOne(User::class, 'id', 'created_by_user_id')
+                    ->where('office_id', Auth::user()->office_id);
     }
 
     /**
      *  @return HasOne
      */
-    public function type()
+    public function updater()
     {
-        return $this->hasOne(OwnerType::class, 'id', 'owner_type_id');
-    }
-
-    /**
-     *  @return HasOne
-     */
-    public function user()
-    {
-        return $this->hasOne(User::class, 'id', 'user_id')
+        return $this->hasOne(User::class, 'id', 'updated_by_user_id')
                     ->where('office_id', Auth::user()->office_id);
     }
 
@@ -60,27 +55,35 @@ class Citizen extends Model
     public function address()
     {
         return $this->hasOne(Address::class, 'owner_id', 'id')
-                    ->where('owner_type_id', $this->type->id);
+                    ->where('owner_type', self::class);
     }
 
     /**
-     *  @return hasOne
+     *  @return HasOne
      */
     public function phone()
     {
         return $this->hasOne(Phone::class, 'owner_id', 'id')
-                    ->where('owner_type_id', $this->type->id)
+                    ->where('owner_type', self::class)
                     ->where('is_main', true);
     }
 
     /**
-     *  @return hasOne
+     *  @return HasOne
      */
     public function phone2()
     {
         return $this->hasOne(Phone::class, 'owner_id', 'id')
-                    ->where('owner_type_id', $this->type->id)
+                    ->where('owner_type', self::class)
                     ->where('is_main', false);
+    }
+
+    /**
+     *  @return HasMany
+     */
+    public function dependents()
+    {
+        return $this->hasMany(Dependent::class, 'citizen_id', 'id');
     }
 
     /**
@@ -92,7 +95,8 @@ class Citizen extends Model
      */
     public static function search(string $query)
     {
-        return self::with('user')
+        return self::with('address', 'phone', 'phone2', 'phone.type')
+                    // ->remember(60 * 60)->prefix(Auth::user()->office_id."_".self::class)
                     ->where('office_id', Auth::user()->office_id)
                     ->where(function ($where) use ($query) {
                         $where->whereRaw('LOWER(name) LIKE "%'.strtolower($query).'%"')

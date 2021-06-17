@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Utils\Text;
 use App\Models\Citizen;
 use App\Utils\Language;
 use Illuminate\View\View;
@@ -13,7 +14,6 @@ use Illuminate\Contracts\View\Factory;
 use App\Repositories\CitizenRepository;
 use App\Repositories\RequestRepository;
 use App\Repositories\DocumentRepository;
-use App\Repositories\OwnerTypeRepository;
 use Illuminate\Http\Request as HttpRequest;
 use App\Repositories\DocumentTypeRepository;
 use App\Repositories\OrganizationRepository;
@@ -73,27 +73,21 @@ class RequestController extends Controller
     {
         $this->firewall('request.insert');
         $request = false;
-        $ownerType = OwnerTypeRepository::requesters();
         $citizens = CitizenRepository::getActives();
         $organizations = OrganizationRepository::getActives();
         $users = UserRepository::getActives();
         $categories = RequestCategoryRepository::getActives();
         $status = RequestStatusRepository::getAll();
-        $requester = false;
-        $requesterType = false;
 
         return view(
             'logged.request.create',
             compact(
                 'request',
-                'ownerType',
                 'citizens',
                 'organizations',
                 'users',
                 'categories',
-                'status',
-                'requester',
-                'requesterType'
+                'status'
             )
         );
     }
@@ -150,22 +144,17 @@ class RequestController extends Controller
         $users = false;
         $categories = RequestCategoryRepository::getActives();
         $status = RequestStatusRepository::getAll();
-        $requester = $request->requester();
-        $requesterType = $request->requesterType();
         $types = DocumentTypeRepository::all();
 
         return view(
             'logged.request.view',
             compact(
                 'request',
-                'ownerType',
                 'citizens',
                 'organizations',
                 'users',
                 'categories',
                 'status',
-                'requester',
-                'requesterType',
                 'types'
             )
         );
@@ -261,7 +250,7 @@ class RequestController extends Controller
             'document_type_id' => 'required',
             'document_date' => 'required',
             'document_title' => ['required'],
-            'document_file' => ['required', 'max:2048', 'mimes:pdf']
+            'file' => ['required', 'max:2048', 'mimes:pdf']
         ]);
 
         $document = DocumentRepository::insert($httpRequest);
@@ -326,7 +315,7 @@ class RequestController extends Controller
 
         $validated = $httpRequest->validate([
             'attachment_title' => 'required',
-            'attachment_file' => ['required', 'max:2048', 'mimes:pdf']
+            'file' => ['required', 'max:2048', 'mimes:pdf']
         ]);
 
         $request = RequestRepository::find($id);
@@ -397,7 +386,6 @@ class RequestController extends Controller
                 'document_code' => $request->document_code,
                 'category' => $request->category,
                 'document_date' => date('d/m/Y', strtotime($request->document_date)),
-                'owner_type' => Language::get($request->owner_type_name),
                 'owner' => $request->owner,
                 'url' => route('request.view', $request->request_id)
             ];

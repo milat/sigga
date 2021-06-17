@@ -30,7 +30,7 @@ abstract class PopulateService
             $citizen->save();
 
             $phone = new Phone();
-            $phone->owner_type_id = 3;
+            $phone->owner_type = Citizen::class;
             $phone->owner_id = $citizen->id;
             $phone->phone_type_id = rand(1, 5);
             $phone->number = '(11) 9'. rand(6000, 9999).' - '.rand(1000, 9999);
@@ -38,7 +38,7 @@ abstract class PopulateService
             $phone->save();
 
             $address = new Address();
-            $address->owner_type_id = 3;
+            $address->owner_type = Citizen::class;
             $address->owner_id = $citizen->id;
             $address->address = 'Rua Fake';
             $address->address_type_id = rand(1, 2);

@@ -16,14 +16,13 @@ class CreateRequestAttachmentsTable extends Migration
         Schema::create('request_attachments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('request_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('file_id');
             $table->string('title', 100);
-            $table->string('file_name', 100);
-            $table->string('file_extension', 10);
-            $table->string('file_path', 255);
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->timestamps();
             $table->foreign('request_id')->references('id')->on('requests');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('file_id')->references('id')->on('files');
+            $table->foreign('created_by_user_id')->references('id')->on('users');
         });
     }
 

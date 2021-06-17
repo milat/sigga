@@ -73,18 +73,20 @@ class User extends Authenticatable
     /**
      *  @return HasOne
      */
-    public function type()
+    public function role()
     {
-        return $this->hasOne(OwnerType::class, 'id', 'owner_type_id');
+        return $this->hasOne(Role::class, 'id', 'role_id')
+                    ->where('office_id', Auth::user()->office_id);
     }
 
     /**
      *  @return HasOne
      */
-    public function role()
+    public function phone()
     {
-        return $this->hasOne(Role::class, 'id', 'role_id')
-                    ->where('office_id', Auth::user()->office_id);
+        return $this->hasOne(Phone::class, 'owner_id', 'id')
+                    ->where('owner_type', self::class)
+                    ->where('is_main', true);
     }
 
     /**
@@ -94,7 +96,8 @@ class User extends Authenticatable
      *
      *  @return bool
      */
-    public function hasPermission(string $permission) {
+    public function hasPermission(string $permission)
+    {
         return $this->role->permits->contains('code', $permission);
     }
 

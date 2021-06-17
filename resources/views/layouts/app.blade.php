@@ -72,6 +72,30 @@
                                 </li>
                             @endcan
 
+                            @can('attachment')
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('attachment.index') }}">{{$language::get('attachments')}}</a>
+                                </li>
+                            @endcan
+
+                            @can('activity')
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{$language::get('activities')}}
+                                    </a>
+
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                        <a class="dropdown-item" href="{{ route('activity.index') }}">{{$language::get('activities')}}</a>
+
+                                        @can('activity_class')
+                                            <a class="dropdown-item" href="{{ route('activity_class.index') }}">{{$language::get('activity_classes')}}</a>
+                                        @endcan
+
+                                    </div>
+                                </li>
+                            @endcan
+
                             @can('config')
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

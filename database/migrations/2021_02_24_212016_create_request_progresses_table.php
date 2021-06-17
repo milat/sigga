@@ -16,11 +16,11 @@ class CreateRequestProgressesTable extends Migration
         Schema::create('request_progresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('request_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
             $table->longText('description');
             $table->timestamps();
             $table->foreign('request_id')->references('id')->on('requests');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('created_by_user_id')->references('id')->on('users');
         });
     }
 

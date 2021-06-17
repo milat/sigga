@@ -1,12 +1,6 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="form-group">
-            <label>{{$language::get('organization_trade')}}</label>
-            <input type="text" class="form-control" disabled="true" value="{{$organization->trade}}" />
-        </div>
-    </div>
-    <div class="col-lg-6">
-        <div class="form-group">
             <label>{{$language::get('organization_name')}}</label>
             <input type="text" class="form-control" disabled="true" value="{{$organization->name}}" />
         </div>
@@ -23,7 +17,7 @@
             <input type="text" class="form-control" disabled="true" value="{{$organization->contact}}" />
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="form-group">
             <label>{{$language::get('organization_branch')}}</label>
             <input type="text" class="form-control" disabled="true" value="{{$organization->branch}}" />

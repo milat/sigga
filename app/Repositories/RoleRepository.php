@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Role;
 use App\Models\RolePermission;
+use App\Services\CacheService as Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request as HttpRequest;
@@ -19,7 +20,12 @@ class RoleRepository extends Repository
      */
     public static function find(int $id)
     {
-        return self::findIn(Role::class, $id);
+        // return Cache::get(Role::class)->rememberForever(
+        //     Cache::key(Role::class, $id),
+        //     function () use($id) {
+                return self::findIn(Role::class, $id);
+        //     }
+        // );
     }
 
     /**
@@ -31,7 +37,12 @@ class RoleRepository extends Repository
      */
     public static function search(string $query)
     {
-        return Role::search($query);
+        // return Cache::get(Role::class)->rememberForever(
+        //     Cache::key(Role::class, $query),
+        //     function () use($query) {
+                return Role::search($query);
+        //     }
+        // );
     }
 
     /**
@@ -51,6 +62,7 @@ class RoleRepository extends Repository
 
         if ($role->save() && RolePermissionRepository::new($role)) {
             DB::commit();
+            // Cache::flush(Role::class);
             return $role;
         }
 
@@ -69,6 +81,7 @@ class RoleRepository extends Repository
     public static function update(Role $role, HttpRequest $httpRequest)
     {
         self::set($role, $httpRequest);
+        // Cache::flush(Role::class);
         return $role->save();
     }
 
@@ -87,6 +100,8 @@ class RoleRepository extends Repository
         }
 
         $isAllowed = (bool)($httpRequest->is_allowed && $httpRequest->is_allowed == 'true');
+
+        // Cache::flush(Role::class);
 
         return RolePermission::change(
             $role,

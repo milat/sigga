@@ -62,9 +62,9 @@
 
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="document_file" class="{{ $document ? '' : 'required' }}">{{$language::get('document_file')}}</label>
-                                <input type="file" class="form-control-file @error('document_file') is-invalid @enderror" id="document_file" name="document_file">
-                                @error('document_file')
+                                <label for="file" class="{{ $document ? '' : 'required' }}">{{$language::get('file')}}</label>
+                                <input type="file" class="form-control-file @error('file') is-invalid @enderror" id="file" name="file">
+                                @error('file')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

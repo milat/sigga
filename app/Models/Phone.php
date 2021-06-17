@@ -18,7 +18,7 @@ class Phone extends Model
      * @var array
      */
     protected $fillable = [
-        'owner_type_id',
+        'owner_type',
         'owner_id',
         'phone_type_id',
         'number',

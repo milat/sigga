@@ -91,6 +91,102 @@ return [
     ],
 
     [
+        'label' => Language::get('attachments'),
+        'code' => 'attachment',
+        'parent' => null
+    ],
+
+    [
+        'label' => Language::get('attachments').$divider.Language::get('insert'),
+        'code' => 'attachment.insert',
+        'parent' => 'attachment'
+    ],
+
+    [
+        'label' => Language::get('attachments').$divider.Language::get('update'),
+        'code' => 'attachment.update',
+        'parent' => 'attachment'
+    ],
+
+    [
+        'label' => Language::get('activities'),
+        'code' => 'activity',
+        'parent' => null
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('insert'),
+        'code' => 'activity.insert',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('update'),
+        'code' => 'activity.update',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_class'),
+        'code' => 'activity_class',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_class').$divider.Language::get('insert'),
+        'code' => 'activity_class.insert',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_class').$divider.Language::get('update'),
+        'code' => 'activity_class.update',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_lesson'),
+        'code' => 'activity_lesson',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_lesson').$divider.Language::get('insert'),
+        'code' => 'activity_lesson.insert',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_lesson').$divider.Language::get('update'),
+        'code' => 'activity_lesson.update',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_subscribe'),
+        'code' => 'activity_subscribe',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_subscribe').$divider.Language::get('insert'),
+        'code' => 'activity_subscribe.insert',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_subscribe').$divider.Language::get('update'),
+        'code' => 'activity_subscribe.update',
+        'parent' => 'activity'
+    ],
+
+    [
+        'label' => Language::get('activities').$divider.Language::get('activity_attend'),
+        'code' => 'activity_attend',
+        'parent' => 'activity'
+    ],
+
+    [
         'label' => Language::get('configs'),
         'code' => 'config',
         'parent' => null

@@ -13,7 +13,7 @@ class RequestStatusRepository extends Repository
      */
     public static function getAll()
     {
-        return RequestStatus::all();
+        return RequestStatus::with('monthRequests', 'yearRequests')->get();
     }
 
     /**

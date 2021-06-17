@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\Factory;
 use App\Repositories\DocumentRepository;
 use Illuminate\Http\Request as HttpRequest;
 use App\Repositories\DocumentTypeRepository;
-use League\CommonMark\Block\Renderer\DocumentRenderer;
 
 class DocumentController extends Controller
 {
@@ -78,7 +77,7 @@ class DocumentController extends Controller
             'document_type_id' => 'required',
             'document_date' => 'required',
             'document_title' => ['required'],
-            'document_file' => ['required', 'max:2048', 'mimes:pdf']
+            'file' => ['required', 'max:2048', 'mimes:pdf']
         ]);
 
         if (DocumentRepository::insert($httpRequest)) {
@@ -127,7 +126,7 @@ class DocumentController extends Controller
             'document_type_id' => 'required',
             'document_date' => 'required',
             'document_title' => ['required'],
-            'document_file' => ['nullable', 'max:2048', 'mimes:pdf']
+            'file' => ['nullable', 'max:2048', 'mimes:pdf']
         ]);
 
         $document = DocumentRepository::find($id);

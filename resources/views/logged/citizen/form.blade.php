@@ -76,7 +76,7 @@
                             <div class="form-group">
                                 <label for="citizen_is_active" class="required">{{$language::get('citizen_is_active')}}</label>
                                 <select id="citizen_is_active" class="form-control combo @error('citizen_is_active') is-invalid @enderror" name="citizen_is_active">
-                                <option value='1' {{(($citizen && $citizen->is_active) || (old('citizen_is_active') == '1')) ? 'selected' : ''}}>{{$language::get('active')}}</option>
+                                    <option value='1' {{(($citizen && $citizen->is_active) || (old('citizen_is_active') == '1')) ? 'selected' : ''}}>{{$language::get('active')}}</option>
                                     <option value='0' {{(($citizen &&  !$citizen->is_active) || (old('citizen_is_active') == '0')) ? 'selected' : ''}}>{{$language::get('inactive')}}</option>
                                 </select>
                                 @error('citizen_is_active')

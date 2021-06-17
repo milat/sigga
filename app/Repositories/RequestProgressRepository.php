@@ -21,7 +21,7 @@ class RequestProgressRepository extends Repository
     {
         $progress = new RequestProgress();
         $progress->request_id = $request->id;
-        $progress->user_id = Auth::user()->id;
+        $progress->created_by_user_id = Auth::user()->id;
         $progress->description = trim($httpRequest->progress_description);
 
         return $progress->save();

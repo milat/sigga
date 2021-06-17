@@ -88,12 +88,12 @@ $(document).ready(function() {
 
     $('.telefone').mask(maskBehavior, options);
 
-    $('#address_postal_code').blur(function(){
-
+    $('#address_code').blur(function(){
+        
         var url = "https://viacep.com.br/ws/"+$(this).val()+"/json/";
 
         $.get(url, function (data) {
-            $("#address_address").val(data.logradouro);
+            $("#address_name").val(data.logradouro);
             $("#address_neighborhood").val(data.bairro);
             $("#address_city").val(data.localidade);
             $('#address_state').val(data.uf);

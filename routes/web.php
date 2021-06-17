@@ -76,6 +76,11 @@ Route::prefix(Friendly::get('citizens'))->name('citizen.')->middleware('auth')->
     Route::get('/'.Friendly::get('create'), 'CitizenController@create')->name('create');
     Route::post('/'.Friendly::get('insert'), 'CitizenController@insert')->name('insert');
     Route::get('/'.Friendly::get('view').'/{id}', 'CitizenController@view')->name('view');
+    Route::get('/'.Friendly::get('view').'/{id}/'.Friendly::get('dependents'), 'DependentController@index')->name('dependent');
+    Route::get('/'.Friendly::get('view').'/{id}/'.Friendly::get('dependents').'/'.Friendly::get('create'), 'DependentController@create')->name('dependent.create');
+    Route::post('/'.Friendly::get('view').'/{id}/'.Friendly::get('dependents').'/'.Friendly::get('insert'), 'DependentController@insert')->name('dependent.insert');
+    Route::get('/'.Friendly::get('view').'/{id}/'.Friendly::get('dependents').'/'.Friendly::get('edit').'/{dependentId}', 'DependentController@edit')->name('dependent.edit');
+    Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('dependents').'/'.Friendly::get('edit').'/{dependentId}'.Friendly::get('update'), 'DependentController@update')->name('dependent.update');
 });
 
 /**
@@ -90,6 +95,50 @@ Route::prefix(Friendly::get('documents'))->name('document.')->middleware('auth')
     Route::post('/'.Friendly::get('insert'), 'DocumentController@insert')->name('insert');
     Route::get('/'.Friendly::get('download').'/{id}', 'DocumentController@download')->name('download');
     Route::get('/'.Friendly::get('combo'), 'DocumentController@combo')->name('combo');
+});
+
+/**
+ *  Attachment
+ */
+Route::prefix(Friendly::get('attachments'))->name('attachment.')->middleware('auth')->group(function () {
+    Route::get('/', 'AttachmentController@index')->name('index');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'AttachmentController@search')->name('search')->where('query', '(.*)')->where('query', '(.*)');
+    Route::get('/'.Friendly::get('edit').'/{id}', 'AttachmentController@edit')->name('edit');
+    Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'AttachmentController@update')->name('update');
+    Route::get('/'.Friendly::get('create'), 'AttachmentController@create')->name('create');
+    Route::post('/'.Friendly::get('insert'), 'AttachmentController@insert')->name('insert');
+    Route::get('/'.Friendly::get('download').'/{id}', 'AttachmentController@download')->name('download');
+});
+
+/**
+ *  Activities
+ */
+Route::prefix(Friendly::get('activities'))->name('activity.')->middleware('auth')->group(function () {
+    Route::get('/', 'ActivityController@index')->name('index');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'ActivityController@search')->name('search')->where('query', '(.*)')->where('query', '(.*)');
+    Route::get('/'.Friendly::get('edit').'/{id}', 'ActivityController@edit')->name('edit');
+    Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'ActivityController@update')->name('update');
+    Route::get('/'.Friendly::get('create'), 'ActivityController@create')->name('create');
+    Route::post('/'.Friendly::get('insert'), 'ActivityController@insert')->name('insert');
+});
+
+/**
+ *  Activity classes
+ */
+Route::prefix(Friendly::get('activity_classes'))->name('activity_class.')->middleware('auth')->group(function () {
+    Route::get('/', 'ActivityClassController@index')->name('index');
+    Route::get('/'.Friendly::get('search').'/{query?}', 'ActivityClassController@search')->name('search')->where('query', '(.*)')->where('query', '(.*)');
+    Route::get('/'.Friendly::get('edit').'/{id}', 'ActivityClassController@edit')->name('edit');
+    Route::put('/'.Friendly::get('edit').'/{id}/'.Friendly::get('update'), 'ActivityClassController@update')->name('update');
+    Route::get('/'.Friendly::get('create'), 'ActivityClassController@create')->name('create');
+    Route::post('/'.Friendly::get('insert'), 'ActivityClassController@insert')->name('insert');
+
+    Route::get('/'.Friendly::get('view').'/{id}/'.Friendly::get('activity_subscribers').'/', 'ActivitySubscriberController@index')->name('subscriber');
+    Route::get('/'.Friendly::get('view').'/{id}/'.Friendly::get('activity_subscribers').'/'.Friendly::get('search').'/{query?}', 'ActivitySubscriberController@search')->name('subscriber.search')->where('query', '(.*)')->where('query', '(.*)');
+    Route::get('/'.Friendly::get('view').'/{id}/'.Friendly::get('activity_subscribers').'/'.Friendly::get('edit').'/{subId}', 'ActivitySubscriberController@edit')->name('subscriber.edit');
+    Route::put('/'.Friendly::get('view').'/{id}/'.Friendly::get('activity_subscribers').'/'.Friendly::get('edit').'/{subId}/'.Friendly::get('update'), 'ActivitySubscriberController@update')->name('subscriber.update');
+    Route::get('/'.Friendly::get('view').'/{id}/'.Friendly::get('activity_subscribers').'/'.Friendly::get('create'), 'ActivitySubscriberController@create')->name('subscriber.create');
+    Route::post('/'.Friendly::get('view').'/{id}/'.Friendly::get('activity_subscribers').'/'.Friendly::get('insert'), 'ActivitySubscriberController@insert')->name('subscriber.insert');
 });
 
 /**

@@ -2,9 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Services\CacheService as Cache;
 use App\Models\RequestCategory;
-use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request as HttpRequest;
 
 class RequestCategoryRepository extends Repository
 {
@@ -17,7 +18,12 @@ class RequestCategoryRepository extends Repository
      */
     public static function find(int $id)
     {
-        return self::findIn(RequestCategory::class, $id);
+        // return Cache::get(RequestCategory::class)->rememberForever(
+        //     Cache::key(RequestCategory::class, $id),
+        //     function () use($id) {
+                return self::findIn(RequestCategory::class, $id);
+        //     }
+        // );
     }
 
     /**
@@ -29,7 +35,12 @@ class RequestCategoryRepository extends Repository
      */
     public static function search(string $query)
     {
-        return RequestCategory::search($query);
+        // return Cache::get(RequestCategory::class)->rememberForever(
+        //     Cache::key(RequestCategory::class, $query),
+        //     function () use($query) {
+                return RequestCategory::search($query);
+        //     }
+        // );
     }
 
     /**
@@ -45,6 +56,8 @@ class RequestCategoryRepository extends Repository
         $category->office_id = Auth::user()->office_id;
         self::set($category, $httpRequest);
 
+        // Cache::flush(RequestCategory::class);
+
         return $category->save();
     }
 
@@ -59,6 +72,9 @@ class RequestCategoryRepository extends Repository
     public static function update(RequestCategory $category, HttpRequest $httpRequest)
     {
         self::set($category, $httpRequest);
+
+        // Cache::flush(RequestCategory::class);
+
         return $category->save();
     }
 
@@ -69,7 +85,12 @@ class RequestCategoryRepository extends Repository
      */
     public static function getActives()
     {
-        return RequestCategory::getActives();
+        // return Cache::get(RequestCategory::class)->rememberForever(
+        //     Cache::key(RequestCategory::class, 'actives'),
+        //     function () {
+                return RequestCategory::getActives();
+        //     }
+        // );
     }
 
     /**

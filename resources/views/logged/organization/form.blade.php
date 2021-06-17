@@ -22,21 +22,10 @@
                 <fieldset>
 
                     <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="organization_trade" class="required">{{$language::get('organization_trade')}}</label>
-                                <input type="text" class="form-control @error('organization_trade') is-invalid @enderror" id="organization_trade" name="organization_trade" maxlength="30" placeholder="{{$language::get('organization_trade_placeholder')}}" value="{{$organization ? $organization->trade : old('organization_trade')}}">
-                                @error('organization_trade')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="col-12 col-md-6">
                             <div class="form-group">
-                                <label for="organization_name">{{$language::get('organization_name')}}</label>
+                                <label for="organization_name" class="required">{{$language::get('organization_name')}}</label>
                                 <input type="text" class="form-control @error('organization_name') is-invalid @enderror" id="organization_name" name="organization_name" maxlength="100" placeholder="{{$language::get('organization_name_placeholder')}}" value="{{$organization ? $organization->name : old('organization_name')}}">
                                 @error('organization_name')
                                     <span class="invalid-feedback" role="alert">

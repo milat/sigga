@@ -1,7 +1,7 @@
-@if ($request && $request->document && ($request->status_id == config('request_statuses.sent.id')) && $request->requester()->phone && $request->requester()->phone->type->name == 'WhatsApp')
+@if ($request && $request->document && ($request->status_id == config('request_statuses.sent.id')) && $request->owner->phone && $request->owner->phone->type->name == 'WhatsApp')
     <div class="row">
         <div class="col-12">
-            <a class="whatsapp" href="https://api.whatsapp.com/send?phone=+55{{$request->requester()->phone->getOnlyNumber()}}&text={{$language::feedbackSent($request)}}" target="_blank;">
+            <a class="whatsapp" href="https://api.whatsapp.com/send?phone=+55{{$request->owner->phone->getOnlyNumber()}}&text={{$language::feedbackSent($request)}}" target="_blank;">
                 Enviar feedback via WhatsApp
             </a>
         </div>

@@ -15,7 +15,7 @@ return [
     ],
 
     'sent' => [
-        'id' => 2, // Used on document's insertion inside request
+        'id' => 2, // Used on document's insertion inside request - do not change it
         'name' => Language::get('sent'),
         'class' => 'table-warning',
         'rgba' => 'rgba(255, 206, 86, <opacity>)'

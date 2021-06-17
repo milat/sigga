@@ -1,7 +1,9 @@
+<?php
+
 namespace Database\Factories;
 
+use Faker\Factory;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 class UserFactory extends Factory

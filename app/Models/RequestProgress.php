@@ -19,15 +19,15 @@ class RequestProgress extends Model
      */
     protected $fillable = [
         'request_id',
-        'user_id',
+        'created_by_user_id',
         'description'
     ];
 
     /**
      *  @return HasOne
      */
-    public function user()
+    public function creator()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'created_by_user_id');
     }
 }

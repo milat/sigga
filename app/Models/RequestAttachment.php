@@ -19,12 +19,18 @@ class RequestAttachment extends Model
      */
     protected $fillable = [
         'request_id',
-        'user_id',
+        'created_by_user_id',
         'title',
-        'file_name',
-        'file_extension',
-        'file_path',
+        'file_id'
     ];
+
+    /**
+     *  @return HasOne
+     */
+    public function file()
+    {
+        return $this->hasOne(File::class, 'id', 'file_id');
+    }
 
     /**
      *  @return HasOne
@@ -37,8 +43,8 @@ class RequestAttachment extends Model
     /**
      *  @return HasOne
      */
-    public function user()
+    public function creator()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'created_by_user_id');
     }
 }

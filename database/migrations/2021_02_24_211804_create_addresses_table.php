@@ -15,20 +15,18 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('owner_type_id');
-            $table->unsignedBigInteger('owner_id');
-            $table->string('postal_code', 15)->nullable();
-            $table->string('address', 255);
+            $table->morphs('owner');
+            $table->string('code', 15)->nullable();
+            $table->string('name', 255)->nullable();
             $table->unsignedBigInteger('address_type_id');
-            $table->string('number', 10);
+            $table->string('number', 10)->nullable();
             $table->string('extra')->nullable();
-            $table->string('neighborhood');
-            $table->string('city', 100);
-            $table->string('state', 30);
+            $table->string('neighborhood')->nullable();
+            $table->string('city', 100)->nullable();
+            $table->string('state', 30)->nullable();
+            $table->string('country', 30)->nullable();
             $table->longText('note')->nullable();
             $table->timestamps();
-            $table->foreign('owner_type_id')->references('id')->on('owner_types');
-            $table->foreign('address_type_id')->references('id')->on('address_types');
         });
     }
 

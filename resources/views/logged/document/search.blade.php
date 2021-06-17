@@ -8,7 +8,7 @@
                         <th scope="col">{{$language::get('document_type_id')}}</th>
                         <th scope="col">{{$language::get('document_code')}}</th>
                         <th scope="col">{{$language::get('document_title')}}</th>
-                        <th scope="col">{{$language::get('document_file_name')}}</th>
+                        <th scope="col">{{$language::get('file_name')}}</th>
                         <th scope="col" class="text-center">{{$language::get('document_date')}}</th>
                         @can('document.update')
                             <th scope="col" class="text-center">{{$language::get('edit')}}</th>
@@ -30,7 +30,7 @@
                                     @endif
                                 </span>
                             </td>
-                            <td style="white-space: nowrap;">{{$document->file_name}}</td>
+                            <td style="white-space: nowrap;">{{$document->file->name}}</td>
                             <td class="text-center" style="white-space: nowrap;"> {{ date('d/m/Y', strtotime($document->date)) }}</td>
                             @can('document.update')
                                 <td class="text-center">

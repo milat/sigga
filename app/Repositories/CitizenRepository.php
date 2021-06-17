@@ -43,12 +43,13 @@ class CitizenRepository extends Repository
     {
         $citizen = new Citizen;
         $citizen->office_id = Auth::user()->office_id;
+        $citizen->created_by_user_id = Auth::user()->id;
 
         self::set($citizen, $httpRequest);
 
         if ($citizen->save()) {
-            AddressRepository::save($httpRequest, Citizen::getOwnerTypeId(), $citizen->id);
-            PhoneRepository::save($httpRequest, Citizen::getOwnerTypeId(), $citizen->id);
+            AddressRepository::save($httpRequest, $citizen);
+            PhoneRepository::save($httpRequest, $citizen);
             return true;
         }
 
@@ -68,8 +69,8 @@ class CitizenRepository extends Repository
         self::set($citizen, $httpRequest);
 
         if ($citizen->save()) {
-            AddressRepository::save($httpRequest, Citizen::getOwnerTypeId(), $citizen->id);
-            PhoneRepository::save($httpRequest, Citizen::getOwnerTypeId(), $citizen->id);
+            AddressRepository::save($httpRequest, $citizen);
+            PhoneRepository::save($httpRequest, $citizen);
             return true;
         }
 
@@ -96,7 +97,7 @@ class CitizenRepository extends Repository
      */
     private static function set(Citizen &$citizen, HttpRequest $httpRequest)
     {
-        $citizen->user_id = Auth::user()->id;
+        $citizen->updated_by_user_id = Auth::user()->id;
         $citizen->name = $httpRequest->citizen_name;
         $citizen->email = $httpRequest->citizen_email;
         $citizen->identity_document = $httpRequest->citizen_identity_document;

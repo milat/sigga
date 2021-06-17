@@ -49,8 +49,9 @@ class RequestRepository extends Repository
         $request = new Request();
 
         $request->office_id = Auth::user()->office_id;
-        $request->owner_type_id = (int) $owner[0];
+        $request->owner_type = (int) $owner[0];
         $request->owner_id = (int) $owner[1];
+        $request->created_by_user_id = Auth::user()->id;
 
         self::set($request, $httpRequest);
 
@@ -113,7 +114,7 @@ class RequestRepository extends Repository
      */
     private static function set(Request &$request, HttpRequest $httpRequest)
     {
-        $request->user_id = Auth::user()->id;
+        $request->updated_by_user_id = Auth::user()->id;
         $request->category_id = $httpRequest->request_category_id;
         $request->status_id = $httpRequest->request_status_id;
         $request->place = $httpRequest->request_place;

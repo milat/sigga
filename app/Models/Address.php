@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Address extends Model
 {
@@ -18,10 +19,10 @@ class Address extends Model
      * @var array
      */
     protected $fillable = [
-        'owner_type_id',
+        'owner_type',
         'owner_id',
-        'postal_code',
-        'address',
+        'code',
+        'name',
         'address_type_id',
         'number',
         'extra',
@@ -38,5 +39,12 @@ class Address extends Model
     public function type()
     {
         return $this->hasOne(AddressType::class, 'id', 'address_type_id');
+    }
+
+    /**
+     *  @return MorphTo
+     */
+    public function owner() {
+        return $this->morphTo();
     }
 }

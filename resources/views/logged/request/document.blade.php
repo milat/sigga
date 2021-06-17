@@ -185,8 +185,8 @@
 
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="document_file" class="required">{{$language::get('document_file')}}</label>
-                                    <input type="file" class="form-control-file" id="document_file" name="document_file">
+                                    <label for="file" class="required">{{$language::get('file')}}</label>
+                                    <input type="file" class="form-control-file" id="file" name="file">
                                 </div>
                             </div>
                         </div>

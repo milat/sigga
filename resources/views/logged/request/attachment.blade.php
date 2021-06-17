@@ -29,8 +29,8 @@
 
                                     <tr>
                                         <td>{{$attachment->title}}</td>
-                                        <td>{{$attachment->file_name}}</td>
-                                        <td class="text-center">{{$attachment->user->email}}</td>
+                                        <td>{{$attachment->file->name}}</td>
+                                        <td class="text-center">{{$attachment->creator->email}}</td>
                                         <td class="text-center">{{ date('d/m/Y H:i:s', strtotime($attachment->created_at)) }}</td>
                                         <td class="text-center">
                                             <a href="{{route('request.download', [$request->id, $attachment->id])}}" title="{{$language::get('download')}} '{{$attachment->file_name}}'"><x-bi-file-earmark-arrow-down/></a>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-group">
-                                    <input type="file" class="form-control-file" id="attachment_file" name="attachment_file">
+                                    <input type="file" class="form-control-file" id="file" name="file">
                                 </div>
                             </div>
                         </div>

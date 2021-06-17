@@ -43,12 +43,13 @@ class OrganizationRepository extends Repository
     {
         $organization = new Organization;
         $organization->office_id = Auth::user()->office_id;
+        $organization->created_by_user_id = Auth::user()->id;
 
         self::set($organization, $httpRequest);
 
         if ($organization->save()) {
-            AddressRepository::save($httpRequest, Organization::getOwnerTypeId(), $organization->id);
-            PhoneRepository::save($httpRequest, Organization::getOwnerTypeId(), $organization->id);
+            AddressRepository::save($httpRequest, $organization);
+            PhoneRepository::save($httpRequest, $organization);
             return true;
         }
 
@@ -68,8 +69,8 @@ class OrganizationRepository extends Repository
         self::set($organization, $httpRequest);
 
         if ($organization->save()) {
-            AddressRepository::save($httpRequest, Organization::getOwnerTypeId(), $organization->id);
-            PhoneRepository::save($httpRequest, Organization::getOwnerTypeId(), $organization->id);
+            AddressRepository::save($httpRequest, $organization);
+            PhoneRepository::save($httpRequest, $organization);
             return true;
         }
 
@@ -104,8 +105,7 @@ class OrganizationRepository extends Repository
      */
     private static function set(Organization &$organization, HttpRequest $httpRequest)
     {
-        $organization->user_id = Auth::user()->id;
-        $organization->trade = $httpRequest->organization_trade;
+        $organization->updated_by_user_id = Auth::user()->id;
         $organization->name = $httpRequest->organization_name;
         $organization->branch = $httpRequest->organization_branch;
         $organization->identity_document = $httpRequest->organization_identity_document;

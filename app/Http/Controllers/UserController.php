@@ -12,6 +12,7 @@ use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\Factory;
+use App\Repositories\PhoneTypeRepository;
 use Illuminate\Http\Request as HttpRequest;
 
 class UserController extends Controller
@@ -61,8 +62,22 @@ class UserController extends Controller
         $this->firewall('user.insert');
         $user = false;
         $roles = Role::actives();
+        $phoneRequired = false;
+        $phone = false;
+        $phone2 = false;
+        $phoneType = PhoneTypeRepository::all();
 
-        return view('logged.user.form', compact('user', 'roles'));
+        return view(
+            'logged.user.form',
+            compact(
+                'user',
+                'roles',
+                'phoneRequired',
+                'phone',
+                'phone2',
+                'phoneType'
+            )
+        );
     }
 
     /**
@@ -108,8 +123,22 @@ class UserController extends Controller
         }
 
         $roles = Role::actives();
+        $phoneRequired = false;
+        $phone = $user->phone;
+        $phone2 = false;
+        $phoneType = PhoneTypeRepository::all();
 
-        return view('logged.user.form', compact('user', 'roles'));
+        return view(
+            'logged.user.form',
+            compact(
+                'user',
+                'roles',
+                'phoneRequired',
+                'phone',
+                'phone2',
+                'phoneType'
+            )
+        );
     }
 
     /**

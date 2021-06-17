@@ -40,7 +40,7 @@
                 $.each(data, function (key, item) {
                     $('.warn-requests').append('<hr /><a href="'+item.url+'">'
                         +'<b>'+item.category+'</b>: '
-                        +'<br />Solicitante: <b>'+item.owner+'</b> ('+item.owner_type+')'
+                        +'<br />Solicitante: <b>'+item.owner+'</b>'
                         +'<br />'+item.document_type+' <b>Nº '+item.document_code+'</b>'
                         +' enviado em <b>'+item.document_date+'</b>'+
                     '</a>');

@@ -10,6 +10,7 @@
                         <th scope="col">{{$language::get('address_neighborhood')}}</th>
                         <th scope="col" class="text-center">{{$language::get('citizen_identity_document')}}</th>
                         <th scope="col" class="text-center">{{$language::get('citizen_is_active')}}</th>
+                        <th scope="col" class="text-center">{{$language::get('citizen_dependents')}}</th>
                         @can('citizen.update')
                             <th scope="col" class="text-center">{{$language::get('edit')}}</th>
                         @endcan
@@ -34,6 +35,9 @@
                             <td style="white-space: nowrap;">{{$citizen->address->neighborhood}}</td>
                             <td class="text-center" style="white-space: nowrap;">{{$citizen->identity_document}}</td>
                             <td class="text-center" style="white-space: nowrap;">{!! $citizen->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
+                            <td class="text-center">
+                                <a href="{{route('citizen.dependent', $citizen->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('citizen'))}} {{$citizen->name}}"><x-bi-people-fill/> {{'('.$citizen->dependents->count().')'}}</a>
+                            </td>
                             @can('citizen.update')
                                 <td class="text-center">
                                     <a href="{{route('citizen.edit', $citizen->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('citizen'))}} {{$citizen->name}}"><x-bi-pencil-square/></a>

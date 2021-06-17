@@ -47,7 +47,12 @@ class UserRepository extends Repository
         self::set($user, $httpRequest);
         $user->password = Hash::make(config('system.generate_password'));
 
-        return $user->save();
+        if ($user->save()) {
+            PhoneRepository::save($httpRequest, $user);
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -61,7 +66,13 @@ class UserRepository extends Repository
     public static function update(User $user, HttpRequest $httpRequest)
     {
         self::set($user, $httpRequest);
-        return $user->save();
+
+        if ($user->save()) {
+            PhoneRepository::save($httpRequest, $user);
+            return true;
+        }
+
+        return false;
     }
 
     /**

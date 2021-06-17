@@ -4,8 +4,6 @@ return [
 
     'office' => [
         'name' => 'SIGGA',
-        'city' => 'Guarulhos',
-        'state' => 'SP',
         'party' => 'SGG',
         'note' => 'Fake',
         'is_active' => true

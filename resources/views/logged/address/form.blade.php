@@ -4,9 +4,9 @@
     <div class="row">
         <div class="col-12 col-md-4 col-lg-2">
             <div class="form-group">
-                <label for="address_postal_code">{{$language::get('address_postal_code')}}</label>
-                <input type="text" class="form-control cep @error('address_postal_code') is-invalid @enderror" id="address_postal_code" name="address_postal_code" placeholder="{{$language::get('address_postal_code_placeholder')}}" value="{{$address ? $address->postal_code : old('address_postal_code')}}">
-                @error('address_postal_code')
+                <label for="address_code">{{$language::get('address_code')}}</label>
+                <input type="text" class="form-control cep @error('address_code') is-invalid @enderror" id="address_code" name="address_code" placeholder="{{$language::get('address_code_placeholder')}}" value="{{$address ? $address->code : old('address_code')}}">
+                @error('address_code')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -16,9 +16,9 @@
 
         <div class="col-12 col-md-8 col-lg-6">
             <div class="form-group">
-                <label for="address_address" class="{{ $isAddressRequired ? 'required' : '' }}">{{$language::get('address_address')}}</label>
-                <input type="text" class="form-control @error('address_address') is-invalid @enderror" id="address_address" name="address_address" placeholder="{{$language::get('address_address_placeholder')}}" value="{{$address ? $address->address : old('address_address')}}">
-                @error('address_address')
+                <label for="address_name" class="{{ $isAddressRequired ? 'required' : '' }}">{{$language::get('address_name')}}</label>
+                <input type="text" class="form-control @error('address_name') is-invalid @enderror" id="address_name" name="address_name" placeholder="{{$language::get('address_name_placeholder')}}" value="{{$address ? $address->name : old('address_name')}}">
+                @error('address_name')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>

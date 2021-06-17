@@ -18,7 +18,7 @@
                             <thead>
                                 <tr class="">
                                     <th scope="col">{{$language::get('progress_description')}}</th>
-                                    <th scope="col" class="text-center">{{$language::get('progress_user_id')}}</th>
+                                    <th scope="col" class="text-center">{{$language::get('progress_created_by_user_id')}}</th>
                                     <th scope="col" class="text-center">{{$language::get('progress_created_at')}}</th>
                                 </tr>
                             </thead>
@@ -27,7 +27,7 @@
 
                                     <tr>
                                         <td>{{$progress->description}}</td>
-                                        <td class="text-center">{{$progress->user->email}}</td>
+                                        <td class="text-center">{{$progress->creator->email}}</td>
                                         <td class="text-center">{{ date('d/m/Y H:i:s', strtotime($progress->created_at)) }}</td>
                                     </tr>
 

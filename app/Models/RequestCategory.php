@@ -78,7 +78,8 @@ class RequestCategory extends Model
      */
     public static function getActives()
     {
-        return self::where('office_id', Auth::user()->office_id)
+        return self::with('monthRequests', 'yearRequests')
+                    ->where('office_id', Auth::user()->office_id)
                     ->where('is_active', true)
                     ->orderBy('name')->get();
     }

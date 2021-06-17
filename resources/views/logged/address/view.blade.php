@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-12 col-md-4 col-lg-4">
         <div class="form-group">
-            <label>{{$language::get('address_postal_code')}}</label>
-            <input type="text" class="form-control" disabled="true" value="{{$address->postal_code}}" />
+            <label>{{$language::get('address_code')}}</label>
+            <input type="text" class="form-control" disabled="true" value="{{$address->code}}" />
         </div>
     </div>
 
     <div class="col-12 col-md-8 col-lg-6">
         <div class="form-group">
-            <label>{{$language::get('address_address')}}</label>
-            <input type="text" class="form-control" disabled="true" value="{{$address->address}}" />
+            <label>{{$language::get('address_name')}}</label>
+            <input type="text" class="form-control" disabled="true" value="{{$address->name}}" />
         </div>
     </div>
 

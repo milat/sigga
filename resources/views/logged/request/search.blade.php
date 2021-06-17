@@ -21,19 +21,15 @@
 
                         <tr class="clickable_row" data-url="{{route('request.view', $request->id)}}">
                             <td scope="row" style="white-space: nowrap;">
-                                <a class='view' title="{{$language::get('view_me')}}" data-title="{{($request->requester()->type->id == 4)?$request->requester()->trade:$request->requester()->name}} <small>({{$language::get($request->requesterType())}})</small>" url='{{route($request->requester()->type->name.".view", $request->requester()->id)}}'>
-                                    @if ($request->requester()->type->id == 4)
-                                        {{$request->requester()->trade}}
-                                    @else
-                                        {{$request->requester()->name}}
-                                    @endif
-                                    <small>({{$language::get($request->requesterType())}})</small>
+                                <a class='view' title="{{$language::get('view_me')}}" data-title="{{$request->owner->name}}" url='{{route($text::getClassName($request->owner).".view", $request->owner->id)}}' >
+                                    {{$request->owner->name}}
+                                    <small>({{$language::get($text::getClassName($request->owner))}})</small>
                                 </a>
                             </td>
                             <td class="text-center" style="white-space: nowrap;">
-                                <a class='copyme' title='{{$request->requester()->phone->type->name ?? ""}} ({{$language::get("copy_me")}})' request-id='{{$request->id}}' data="{{$request->requester()->phone->number ?? ''}}">
-                                    {{$request->requester()->phone->number ?? ''}}
-                                    @if ($request->requester()->phone && $request->requester()->phone->type->name == 'WhatsApp')
+                                <a class='copyme' title='{{$request->owner->phone->type->name ?? ""}} ({{$language::get("copy_me")}})' request-id='{{$request->id}}' data="{{$request->owner->phone->number ?? ''}}">
+                                    {{$request->owner->phone->number ?? ''}}
+                                    @if ($request->owner->phone && $request->owner->phone->type->name == 'WhatsApp')
                                         <img width='15px' src="{{ asset('images/whatsapp.png') }}" />
                                     @endif
                                 </a>

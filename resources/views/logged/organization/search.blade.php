@@ -5,7 +5,7 @@
                 <caption>{{$organizations->total()}} {{$language::get('records_found')}}</caption>
                 <thead>
                     <tr class="table-info">
-                        <th scope="col">{{$language::get('organization_trade')}}</th>
+                        <th scope="col">{{$language::get('organization_name')}}</th>
                         <th scope="col" class="text-center">{{$language::get('phone')}}</th>
                         <th scope="col">{{$language::get('organization_contact')}}</th>
                         <th scope="col" class="text-center">{{$language::get('organization_branch')}}</th>
@@ -21,7 +21,7 @@
                     @forelse($organizations as $organization)
 
                         <tr>
-                            <th scope="row" style="white-space: nowrap;">{{$organization->trade}}</th>
+                            <th scope="row" style="white-space: nowrap;">{{$organization->name}}</th>
                             <td class="text-center" style="white-space: nowrap;">
                                 <a href='javascript:;' class='copyme' title='{{$organization->phone->type->name ?? ""}} ({{$language::get("copy_me")}})' data-id='{{$organization->id}}' data='{{$organization->phone->number ?? ""}}'>
                                     {{$organization->phone->number ?? ''}}
@@ -38,11 +38,11 @@
                             <td class="text-center" style="white-space: nowrap;">{!! $organization->is_active ? $language::get('active') : "<span class='inactive'>".$language::get('inactive')."</span>"!!}</td>
                             @can('organization.update')
                                 <td class="text-center">
-                                    <a href="{{route('organization.edit', $organization->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('organization'))}} {{$organization->trade}}"><x-bi-pencil-square/></a>
+                                    <a href="{{route('organization.edit', $organization->id)}}" title="{{$language::get('edit')}} {{strtolower($language::get('organization'))}} {{$organization->name}}"><x-bi-pencil-square/></a>
                                 </td>
                             @endcan
                             <td class="text-center">
-                                <a class='view' href='javascript:;' title="{{$language::get('view_me')}}" url='{{route("organization.view", $organization->id)}}' data-title="{{$organization->trade}}">
+                                <a class='view' href='javascript:;' title="{{$language::get('view_me')}}" url='{{route("organization.view", $organization->id)}}' data-title="{{$organization->name}}">
                                     <x-bi-eye/>
                                 </a>
                             </td>

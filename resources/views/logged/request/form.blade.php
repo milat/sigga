@@ -16,8 +16,8 @@
                             <div class="form-group">
                                 <label for="requester" class='required'>{{$language::get('request_requester')}}</label>
                                 <div class="input-group">
-                                    <input type="text" disabled="true" class="form-control" id="solicitante" value="{{$request->requester()->type->id == 4 ? $request->requester()->trade : $request->requester()->name}} ({{$language::get($request->requesterType())}})">
-                                    <button class="btn btn-outline-secondary view" data-title="{{$request->requester()->type->id == 4 ? $request->requester()->trade : $request->requester()->name}} ({{$language::get($request->requesterType())}})" url="{{route($request->requester()->type->name.".view", $request->requester()->id)}}" type="button" title="{{$language::get('view_me')}}">
+                                    <input type="text" disabled="true" class="form-control" id="solicitante" value="{{$request->owner->name}} ({{$language::get($text::getClassName($request->owner))}})">
+                                    <button class="btn btn-outline-secondary view" data-title="{{$request->owner->name}} ({{$language::get($text::getClassName($request->owner))}})" url="{{route($text::getClassName($request->owner).'.view', $request->owner->id)}}" type="button" title="{{$language::get('view_me')}}">
                                         <x-bi-eye/>
                                     </button>
                                 </div>
@@ -26,7 +26,7 @@
                         <div class="col-12 col-md-6 col-lg-3">
                             <div class="form-group">
                                 <label for="request_responsible" class='required'>{{$language::get('request_responsible')}}</label>
-                                <input type="text" disabled="true" class="form-control" id="request_responsible" value="{{$request->responsible->email}}">
+                                <input type="text" disabled="true" class="form-control" id="request_responsible" value="{{$request->updater->email}}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6 col-lg-3">
@@ -45,15 +45,15 @@
                                     <option></option>
                                     <optgroup label="{{$language::get('citizens')}}" />
                                     @foreach ($citizens as $citizen)
-                                        <option {{ old('request_owner_id') == $citizen->owner_type_id.'_'.$citizen->id ? 'selected' :  '' }} value="{{$citizen->owner_type_id}}_{{$citizen->id}}">{{$citizen->name}} ({{$citizen->identity_document}})</option>
+                                        <option {{ old('request_owner_id') == get_class($citizen).'_'.$citizen->id ? 'selected' :  '' }} value="{{get_class($citizen)}}_{{$citizen->id}}">{{$citizen->name}} ({{$citizen->identity_document}})</option>
                                     @endforeach
                                     <optgroup label="{{$language::get('organizations')}}" />
                                     @foreach ($organizations as $organization)
-                                        <option {{ old('request_owner_id') == $organization->owner_type_id.'_'.$organization->id ? 'selected' :  '' }} value="{{$organization->owner_type_id}}_{{$organization->id}}">{{$organization->trade}} ({{$language::get('organization_contact')}}: {{$organization->contact}}{{$organization->identity_document ? '; '.$organization->identity_document.';' : ''}})</option>
+                                        <option {{ old('request_owner_id') == get_class($organization).'_'.$organization->id ? 'selected' :  '' }} value="{{get_class($organization)}}_{{$organization->id}}">{{$organization->trade}} ({{$language::get('organization_contact')}}: {{$organization->contact}}{{$organization->identity_document ? '; '.$organization->identity_document.';' : ''}})</option>
                                     @endforeach
                                     <optgroup label="{{$language::get('users')}}" />
                                     @foreach ($users as $user)
-                                        <option {{ old('request_owner_id') == $user->owner_type_id.'_'.$user->id ? 'selected' :  '' }} value="{{$user->owner_type_id}}_{{$user->id}}">{{$user->name}} ({{$user->email}})</option>
+                                        <option {{ old('request_owner_id') == get_class($user).'_'.$user->id ? 'selected' :  '' }} value="{{get_class($user)}}_{{$user->id}}">{{$user->name}} ({{$user->email}})</option>
                                     @endforeach
                                 </select>
                                 @error('request_owner_id')
@@ -63,7 +63,6 @@
                                 @enderror
                             </div>
                         </div>
-
                     </div>
                 @endif
 

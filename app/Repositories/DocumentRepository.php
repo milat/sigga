@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Models\Document;
 use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class DocumentRepository extends Repository
 {
@@ -43,9 +42,13 @@ class DocumentRepository extends Repository
     public static function insert(HttpRequest $httpRequest)
     {
         $document = new Document;
+        $file = FileRepository::insert($httpRequest, self::getFilePath());
+
         $document->office_id = Auth::user()->office_id;
+        $document->created_by_user_id = Auth::user()->id;
+        $document->file_id = $file->id;
+
         self::set($document, $httpRequest);
-        self::setFile($document, $httpRequest);
 
         if ($document->save()) {
             return $document;
@@ -64,9 +67,8 @@ class DocumentRepository extends Repository
      */
     public static function update(Document $document, HttpRequest $httpRequest)
     {
+        FileRepository::update($document->file, $httpRequest, self::getFilePath());
         self::set($document, $httpRequest);
-        self::setFile($document, $httpRequest);
-
         return $document->save();
     }
 
@@ -104,7 +106,7 @@ class DocumentRepository extends Repository
      */
     public static function download(Document $document)
     {
-        return Storage::download($document->file_path, $document->file_name);
+        return FileRepository::download($document->file);
     }
 
     /**
@@ -117,7 +119,7 @@ class DocumentRepository extends Repository
      */
     private static function set(Document &$document, HttpRequest $httpRequest)
     {
-        $document->user_id = Auth::user()->id;
+        $document->updated_by_user_id = Auth::user()->id;
         $document->document_type_id = $httpRequest->document_type_id;
         $document->date = $httpRequest->document_date;
         $document->code = $httpRequest->document_code;
@@ -126,50 +128,12 @@ class DocumentRepository extends Repository
     }
 
     /**
-     *  Sets and persist document file
-     *
-     *  @param Document $document
-     *  @param HttpRequest $httpRequest
-     *
-     *  @return void
-     */
-    private static function setFile(Document &$document, HttpRequest $httpRequest)
-    {
-        if ($httpRequest->hasFile('document_file')) {
-
-            $oldPath = $document->file_path;
-
-            $file = $httpRequest->file('document_file');
-            $extension = $file->getClientOriginalExtension();
-            $fileName = $file->getClientOriginalName();
-            $path = self::getPath($fileName);
-
-            Storage::disk('local')->put($path, file_get_contents($file->getRealPath()));
-
-            $document->file_name = $fileName;
-            $document->file_extension = $extension;
-            $document->file_path = $path;
-
-            if ($oldPath) {
-                Storage::disk('local')->delete($oldPath);
-            }
-
-        }
-    }
-
-    /**
-     *  Get document path based on config/system.php
-     *
-     *  @param string $fileName
+     *  Returns default file path
      *
      *  @return string
      */
-    private static function getPath(string $fileName)
+    private static function getFilePath()
     {
-        $path = config('system.documents_path');
-        $path = str_replace('<office_id>', Auth::user()->office_id, $path);
-        $path = str_replace('<file_name>', time()."_".$fileName, $path);
-
-        return $path;
+        return config('system.documents_path');
     }
 }

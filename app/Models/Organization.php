@@ -20,8 +20,6 @@ class Organization extends Model
      */
     protected $fillable = [
         'office_id',
-        'user_id',
-        'trade',
         'name',
         'branch',
         'identity_document',
@@ -29,31 +27,25 @@ class Organization extends Model
         'contact',
         'note',
         'is_active',
-        'owner_type_id',
+        'created_by_user_id',
+        'updated_by_user_id'
     ];
 
     /**
-     *  @return int
+     *  @return HasOne
      */
-    public static function getOwnerTypeId()
+    public function creator()
     {
-        return config('owner_types.organization.id');
+        return $this->hasOne(User::class, 'id', 'created_by_user_id')
+                    ->where('office_id', Auth::user()->office_id);
     }
 
     /**
      *  @return HasOne
      */
-    public function type()
+    public function updater()
     {
-        return $this->hasOne(OwnerType::class, 'id', 'owner_type_id');
-    }
-
-    /**
-     *  @return HasOne
-     */
-    public function user()
-    {
-        return $this->hasOne(User::class, 'id', 'user_id')
+        return $this->hasOne(User::class, 'id', 'updated_by_user_id')
                     ->where('office_id', Auth::user()->office_id);
     }
 
@@ -63,26 +55,26 @@ class Organization extends Model
     public function address()
     {
         return $this->hasOne(Address::class, 'owner_id', 'id')
-                    ->where('owner_type_id', $this->type->id);
+                    ->where('owner_type', self::class);
     }
 
     /**
-     *  @return hasOne
+     *  @return HasOne
      */
     public function phone()
     {
         return $this->hasOne(Phone::class, 'owner_id', 'id')
-                    ->where('owner_type_id', $this->type->id)
+                    ->where('owner_type', self::class)
                     ->where('is_main', true);
     }
 
     /**
-     *  @return hasOne
+     *  @return HasOne
      */
     public function phone2()
     {
         return $this->hasOne(Phone::class, 'owner_id', 'id')
-                    ->where('owner_type_id', $this->type->id)
+                    ->where('owner_type', self::class)
                     ->where('is_main', false);
     }
 
@@ -95,18 +87,16 @@ class Organization extends Model
      */
     public static function search(string $query)
     {
-        return self::with('user')
-                    ->where('office_id', '=', Auth::user()->office_id)
+        return self::where('office_id', '=', Auth::user()->office_id)
                     ->where(function ($where) use ($query) {
                         $where->whereRaw('LOWER(name) LIKE "%'.strtolower($query).'%"')
-                        ->orWhereRaw('LOWER(trade) LIKE "%'.strtolower($query).'%"')
                         ->orWhereRaw('LOWER(identity_document) LIKE "%'.strtolower($query).'%"')
                         ->orWhereRaw('LOWER(branch) LIKE "%'.strtolower($query).'%"')
                         ->orWhereRaw('LOWER(contact) LIKE "%'.strtolower($query).'%"')
                         ->orWhereRaw('LOWER(email) LIKE "%'.strtolower($query).'%"');
                     })
                     ->orderBy('is_active', 'desc')
-                    ->orderBy('trade')
+                    ->orderBy('name')
                     ->paginate(config('system.paginate'));
     }
 
@@ -119,7 +109,7 @@ class Organization extends Model
     {
         return self::where('office_id', Auth::user()->office_id)
                     ->where('is_active', true)
-                    ->orderBy('trade')
+                    ->orderBy('name')
                     ->get();
     }
 

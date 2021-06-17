@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Phone;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request as HttpRequest;
 
 class PhoneRepository
@@ -11,15 +12,14 @@ class PhoneRepository
      *  Persists main and second (optional) phones
      *
      *  @param HttpRequest $httpRequest
-     *  @param int $ownerTypeId
-     *  @param int $ownerId
+     *  @param Model $owner
      *
      *  @return bool
      */
-    public static function save(HttpRequest $httpRequest, int $ownerTypeId, int $ownerId)
+    public static function save(HttpRequest $httpRequest, Model $owner)
     {
-        $main = self::persist($httpRequest, $ownerTypeId, $ownerId, true);
-        $second = self::persist($httpRequest, $ownerTypeId, $ownerId, false);
+        $main = self::persist($httpRequest, $owner, true);
+        $second = self::persist($httpRequest, $owner, false);
 
         return ($main && ($second || !self::isFilled($httpRequest, false)));
     }
@@ -28,25 +28,25 @@ class PhoneRepository
      *  Persists main phone
      *
      *  @param HttpRequest $httpRequest
-     *  @param int $ownerTypeId
-     *  @param int $ownerId
+     *  @param Model $owner
+     *  @param bool $isMain
      *
      *  @return bool
      */
-    private static function persist(HttpRequest $httpRequest, int $ownerTypeId, int $ownerId, bool $isMain)
+    private static function persist(HttpRequest $httpRequest, Model $owner, bool $isMain)
     {
         if (!self::isFilled($httpRequest, $isMain)) {
             if (!$isMain) {
-                self::deleteSecondary($ownerTypeId, $ownerId);
+                self::deleteSecondary($owner);
             }
             return false;
         }
 
-        $phone = self::firstOrNew($ownerTypeId, $ownerId, $isMain);
+        $phone = self::firstOrNew($owner, $isMain);
         $x = (!$isMain) ? '_2' : '';
 
-        $phone->owner_type_id = $ownerTypeId;
-        $phone->owner_id = $ownerId;
+        $phone->owner_type = get_class($owner);
+        $phone->owner_id = $owner->id;
         $phone->phone_type_id = $httpRequest->{'phone_phone_type_id'.$x};
         $phone->number = $httpRequest->{'phone_number'.$x};
         $phone->note = $httpRequest->{'phone_note'.$x};
@@ -58,15 +58,14 @@ class PhoneRepository
     /**
      *  Deletes owners secondary phone
      *
-     *  @param int $ownerTypeId
-     *  @param int $ownerId
+     *  @param Model $owner
      *
      *  @return void
      */
-    private static function deleteSecondary(int $ownerTypeId, int $ownerId)
+    private static function deleteSecondary(Model $owner)
     {
-        Phone::where('owner_type_id', $ownerTypeId)
-            ->where('owner_id', $ownerId)
+        Phone::where('owner_type', get_class($owner))
+            ->where('owner_id', $owner->id)
             ->where('is_main', false)
             ->delete();
     }
@@ -74,16 +73,15 @@ class PhoneRepository
     /**
      *  Returns found phone or a new instance
      *
-     *  @param int $ownerTypeId
-     *  @param int $ownerId
+     *  @param Model $owner
      *  @param bool isMain
      *
      *  @return Phone
      */
-    private static function firstOrNew($ownerTypeId, $ownerId, $isMain = true)
+    private static function firstOrNew(Model $owner, $isMain = true)
     {
-        return Phone::where('owner_type_id', $ownerTypeId)
-                        ->where('owner_id', $ownerId)
+        return Phone::where('owner_type', get_class($owner))
+                        ->where('owner_id', $owner->id)
                         ->where('is_main', $isMain)
                         ->first()
                         ??

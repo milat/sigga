@@ -95,7 +95,10 @@
                             </div>
                         </div>
                     </div>
+
                 </fieldset>
+
+                @include('logged.phone.form')
 
                 <div class="row">
                     <div class="col">

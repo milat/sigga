@@ -22,12 +22,12 @@ class Document extends Model
         'office_id',
         'user_id',
         'document_type_id',
+        'file_id',
         'date',
         'code',
         'title',
-        'file_name',
-        'file_extension',
-        'file_path',
+        'created_by_user_id',
+        'updated_by_user_id',
         'note'
     ];
 
@@ -40,6 +40,32 @@ class Document extends Model
     }
 
     /**
+     *  @return HasOne
+     */
+    public function file()
+    {
+        return $this->hasOne(File::class, 'id', 'file_id');
+    }
+
+    /**
+     *  @return HasOne
+     */
+    public function creator()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by_user_id')
+                    ->where('office_id', Auth::user()->office_id);
+    }
+
+    /**
+     *  @return HasOne
+     */
+    public function updater()
+    {
+        return $this->hasOne(User::class, 'id', 'updated_by_user_id')
+                    ->where('office_id', Auth::user()->office_id);
+    }
+
+    /**
      *  Searches for document by query
      *
      *  @param string $query
@@ -48,12 +74,12 @@ class Document extends Model
      */
     public static function search(string $query)
     {
-        return self::where('office_id', '=', Auth::user()->office_id)
+        return self::with('file')
+                    ->where('office_id', '=', Auth::user()->office_id)
                     ->where(function ($where) use ($query) {
                         $where->whereRaw('LOWER(code) LIKE "%'.strtolower($query).'%"')
                                 ->orWhereRaw('LOWER(title) LIKE "%'.strtolower($query).'%"')
-                                ->orWhereRaw('LOWER(date) LIKE "%'.strtolower($query).'%"')
-                                ->orWhereRaw('LOWER(file_name) LIKE "%'.strtolower($query).'%"');
+                                ->orWhereRaw('LOWER(date) LIKE "%'.strtolower($query).'%"');
                     })
                     ->orderBy('date', 'desc')
                     ->orderBy('code', 'desc')
@@ -76,8 +102,7 @@ class Document extends Model
                     ->where(function ($where) use ($query) {
                         $where->whereRaw('LOWER(documents.code) LIKE "%'.strtolower($query).'%"')
                                 ->orWhereRaw('LOWER(documents.title) LIKE "%'.strtolower($query).'%"')
-                                ->orWhereRaw('LOWER(documents.date) LIKE "%'.strtolower($query).'%"')
-                                ->orWhereRaw('LOWER(documents.file_name) LIKE "%'.strtolower($query).'%"');
+                                ->orWhereRaw('LOWER(documents.date) LIKE "%'.strtolower($query).'%"');
                     })
                     ->where('document_types.can_request', true)
                     ->orderBy('documents.document_type_id')

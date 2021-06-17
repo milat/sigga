@@ -18,8 +18,6 @@ class Office extends Model
      */
     protected $fillable = [
         'name',
-        'city',
-        'state',
         'party',
         'note',
         'is_active'

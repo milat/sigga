@@ -22,14 +22,16 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->string('password', 100);
-            $table->string('identity_document', 20)->unique()->nullable();
+            $table->string('identity_document', 20)->nullable();
             $table->longText('note')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->unsignedBigInteger('owner_type_id')->default(config('owner_types.users.id'));
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
             $table->timestamps();
             $table->foreign('office_id')->references('id')->on('offices');
             $table->foreign('role_id')->references('id')->on('roles');
-            $table->foreign('owner_type_id')->references('id')->on('owner_types');
+            $table->foreign('created_by_user_id')->references('id')->on('users');
+            $table->foreign('updated_by_user_id')->references('id')->on('users');
         });
     }
 

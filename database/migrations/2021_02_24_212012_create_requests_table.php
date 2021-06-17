@@ -16,9 +16,7 @@ class CreateRequestsTable extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('office_id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('owner_type_id');
-            $table->unsignedBigInteger('owner_id');
+            $table->morphs('owner');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('document_id')->nullable();
             $table->unsignedBigInteger('status_id');
@@ -26,13 +24,15 @@ class CreateRequestsTable extends Migration
             $table->longText('description');
             $table->string('place', 150)->nullable();
             $table->date('reminder')->nullable();
+            $table->unsignedBigInteger('created_by_user_id')->nullable();
+            $table->unsignedBigInteger('updated_by_user_id')->nullable();
             $table->timestamps();
             $table->foreign('office_id')->references('id')->on('offices');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('owner_type_id')->references('id')->on('owner_types');
             $table->foreign('category_id')->references('id')->on('request_categories');
             $table->foreign('document_id')->references('id')->on('documents');
             $table->foreign('status_id')->references('id')->on('request_statuses');
+            $table->foreign('created_by_user_id')->references('id')->on('users');
+            $table->foreign('updated_by_user_id')->references('id')->on('users');
         });
     }
 
